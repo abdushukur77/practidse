@@ -7,6 +7,7 @@ import 'package:practidse/blocs/books/cards_bloc.dart';
 import 'package:practidse/blocs/books/cards_event.dart';
 import 'package:practidse/blocs/books/cards_state.dart';
 import 'package:practidse/data/models/card/card_model.dart';
+import 'package:practidse/notifications/locale_notifications.dart';
 import 'package:practidse/screens/add_new_card/add_mew_card_screen.dart';
 import 'package:practidse/screens/global_widgets/card_container.dart';
 import 'package:practidse/utils/colors/app_colors.dart';
@@ -130,11 +131,17 @@ class _CardScreenState extends State<CardScreen> {
                                           TextButton(
                                             onPressed: () {
                                               context.read<CardsBloc>().add(
-                                                DeleteCardEvent(
+                                                    DeleteCardEvent(
                                                       uuid: card.uuid,
                                                     ),
                                                   );
-
+                                              LocalNotificationService()
+                                                  .showNotification(
+                                                title: 'DIQQAT!!!',
+                                                body:
+                                                    "${card.cardNumber} RAQAMLI KARTA O'CHIRILDI!!!",
+                                                id: DateTime.now().millisecond,
+                                              );
                                               Navigator.pop(context);
                                               context.read<CardsBloc>().add(
                                                     GetCardsEvent(),
