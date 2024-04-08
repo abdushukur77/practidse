@@ -149,6 +149,9 @@ class _CardScreenState extends State<CardScreen> {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 SnackBar(
+                                                  duration: const Duration(
+                                                    seconds: 2,
+                                                  ),
                                                   backgroundColor:
                                                       Colors.lightBlueAccent,
                                                   content: Text(
