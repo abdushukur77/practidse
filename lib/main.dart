@@ -10,6 +10,7 @@ import 'blocs/books/cards_event.dart';
 import 'data/api_provider/api_provider.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await AppPermissions.getNotificationsPermission();
   runApp(
     const App(),

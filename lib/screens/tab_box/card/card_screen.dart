@@ -119,12 +119,12 @@ class _CardScreenState extends State<CardScreen> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        backgroundColor: AppColors.white,
+                                        backgroundColor: AppColors.black,
                                         title:
                                             const Text("Ishonchingiz komilmi?"),
                                         titleTextStyle:
                                             AppTextStyle.interBold.copyWith(
-                                          color: AppColors.black,
+                                          color: AppColors.white,
                                           fontSize: 20.sp,
                                         ),
                                         actions: <Widget>[
@@ -156,7 +156,7 @@ class _CardScreenState extends State<CardScreen> {
                                                       Colors.lightBlueAccent,
                                                   content: Text(
                                                     textAlign: TextAlign.center,
-                                                    'BOOK DELETED SUCCESSFULLY!!!',
+                                                    'CARD DELETED SUCCESSFULLY!!!',
                                                     style: AppTextStyle
                                                         .interBold
                                                         .copyWith(
@@ -173,7 +173,7 @@ class _CardScreenState extends State<CardScreen> {
                                               'Yes',
                                               style: AppTextStyle.interBold
                                                   .copyWith(
-                                                color: AppColors.black,
+                                                color: Colors.red,
                                               ),
                                             ),
                                           ),
@@ -185,7 +185,8 @@ class _CardScreenState extends State<CardScreen> {
                                               'No',
                                               style: AppTextStyle.interBold
                                                   .copyWith(
-                                                      color: AppColors.black),
+                                                color: Colors.blue,
+                                              ),
                                             ),
                                           ),
                                         ],
