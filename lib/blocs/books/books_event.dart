@@ -1,17 +1,16 @@
-
-import 'package:practidse/data/models/book/book_model.dart';
+import 'package:practidse/data/models/card/card_model.dart';
 
 abstract class BooksEvent {}
 
 class GetBooksEvent extends BooksEvent {}
 
 class AddBookEvent extends BooksEvent {
-  final BookModel bookModel;
+  final CardModel bookModel;
 
   AddBookEvent({required this.bookModel});
 }
 class UpdateBookEvent extends BooksEvent {
-  final BookModel bookModel;
+  final CardModel bookModel;
 
   UpdateBookEvent({required this.bookModel});
 }

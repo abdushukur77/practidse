@@ -1,10 +1,9 @@
-
-import 'package:practidse/data/models/book/book_model.dart';
+import 'package:practidse/data/models/card/card_model.dart';
 
 abstract class BooksState {}
 
 class BooksSuccessState extends BooksState {
-  final List<BookModel> books;
+  final List<CardModel> books;
 
   BooksSuccessState({required this.books});
 }
@@ -14,12 +13,12 @@ class BooksInitialState extends BooksState {}
 class BooksLoadingState extends BooksState {}
 
 class AddBookState extends BooksState {
-  final BookModel bookModel;
+  final CardModel bookModel;
 
   AddBookState(this.bookModel);
 }
 class UpdateBookState extends BooksState {
-  final BookModel bookModel;
+  final CardModel bookModel;
 
   UpdateBookState(this.bookModel);
 }

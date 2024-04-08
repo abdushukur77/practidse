@@ -2,29 +2,27 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:practidse/data/client/api_client.dart';
-import 'package:practidse/data/models/book/book_model.dart';
 import '../../utils/app_constants/app_constants.dart';
 import '../models/card/card_model.dart';
-import '../models/card/network_response.dart';
 import '../response/my_response.dart';
 
 class ApiProvider extends ApiClient {
-  Future<MyResponse> getBooks() async {
-    List<BookModel> books = [];
+  Future<MyResponse> getCards() async {
+    List<CardModel> cards = [];
 
     try {
       Response response = await dio.get(AppConstants.endPoint);
       if (response.statusCode == HttpStatus.ok) {
-        books = (response.data['items'] as List?)
+        cards = (response.data['items'] as List?)
                 ?.map(
-                  (e) => BookModel.fromJson(
+                  (e) => CardModel.fromJson(
                     e,
                   ),
                 )
                 .toList() ??
             [];
         return MyResponse(
-          data: books,
+          data: cards,
         );
       }
     } catch (error) {
@@ -38,10 +36,10 @@ class ApiProvider extends ApiClient {
     );
   }
 
-  Future<MyResponse> deleteBook(String uuid) async {
+  Future<MyResponse> deleteCard(String uuid) async {
     try {
       Response response = await dio.delete(
-        AppConstants.base,
+        AppConstants.endPoint,
         queryParameters: {},
         data: [
           {"_uuid": uuid}
@@ -58,12 +56,12 @@ class ApiProvider extends ApiClient {
     }
   }
 
-  Future<MyResponse> addNewBook(BookModel bookModel) async {
+  Future<MyResponse> addNewCard(CardModel cardModel) async {
     try {
       Response response = await dio.post(
-        AppConstants.base,
+        AppConstants.endPoint,
         data: [
-          bookModel.toJson(),
+          cardModel.toJson(),
         ],
       );
       return MyResponse(
@@ -77,12 +75,12 @@ class ApiProvider extends ApiClient {
     }
   }
 
-  Future<MyResponse> updateBook(BookModel bookModel) async {
+  Future<MyResponse> updateCard(CardModel cardModel) async {
     try {
       Response response = await dio.put(
-        AppConstants.base,
+        AppConstants.endPoint,
         data: [
-          bookModel.toJsonForUpdate(),
+          cardModel.toJsonForUpdate(),
         ],
       );
       return MyResponse(
@@ -94,22 +92,5 @@ class ApiProvider extends ApiClient {
         errorText: error.toString(),
       );
     }
-  }
-
-  Future<NetworkResponse> getCards() async {
-    try {
-      Response response = await dio.get("/api/v1/cards");
-      if (response.statusCode == 200) {
-        List<CardModel> cards = (response.data as List?)
-            ?.map((e) => CardModel.fromJson(e))
-            .toList() ??
-            [];
-        return NetworkResponse(data: cards);
-      }
-    } catch (error) {
-      debugPrint("ERROR:$error");
-      return NetworkResponse(errorText: error.toString());
-    }
-    return NetworkResponse(errorText: "OTHER ERROR");
   }
 }

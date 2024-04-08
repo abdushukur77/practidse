@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:practidse/blocs/books/books_state.dart';
-import 'package:practidse/data/models/book/book_model.dart';
 import 'package:practidse/data/repositories/books_repository.dart';
 import '../../data/api_provider/api_provider.dart';
+import '../../data/models/card/card_model.dart';
 import 'books_event.dart';
 
 class BooksBloc extends Bloc<BooksEvent, BooksState> {
@@ -14,7 +14,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     on<UpdateBookEvent>(_updateBooks);
   }
 
-  BookModel? bookModel;
+  CardModel? bookModel;
   final BooksRepository booksRepository;
 }
 
@@ -28,11 +28,11 @@ Future<void> _getBooks(
   BooksRepository booksRepository = BooksRepository(
     apiProvider: apiProvider,
   );
-  var response = await booksRepository.getBooks();
+  var response = await booksRepository.getCards();
   if (response.errorText.isNotEmpty) {
     emit(BooksErrorState(response.errorText));
   } else {
-    emit(BooksSuccessState(books: response.data as List<BookModel>));
+    emit(BooksSuccessState(books: response.data as List<CardModel>));
   }
 }
 
@@ -45,7 +45,7 @@ Future<void> _addBooks(
   try {
     ApiProvider apiProvider = ApiProvider();
     BooksRepository booksRepository = BooksRepository(apiProvider: apiProvider);
-    var response = await booksRepository.addNewBooks(event.bookModel);
+    var response = await booksRepository.addNewCard(event.bookModel);
 
     if (response.errorText.isNotEmpty) {
       emit(BooksErrorState(response.errorText));
@@ -64,7 +64,7 @@ Future<void> _updateBooks(
   try {
     ApiProvider apiProvider = ApiProvider();
     BooksRepository booksRepository = BooksRepository(apiProvider: apiProvider);
-    var response = await booksRepository.updateNewBooks(event.bookModel);
+    var response = await booksRepository.updateCard(event.bookModel);
 
     if (response.errorText.isNotEmpty) {
       emit(BooksErrorState(response.errorText));
@@ -81,7 +81,7 @@ Future<void> _deleteBooks(
   try {
     ApiProvider apiProvider = ApiProvider();
     BooksRepository booksRepository = BooksRepository(apiProvider: apiProvider);
-    var response = await booksRepository.deleteBooks(event.uuid);
+    var response = await booksRepository.deleteCard(event.uuid);
 
     if (response.errorText.isNotEmpty) {
       emit(BooksErrorState(response.errorText));

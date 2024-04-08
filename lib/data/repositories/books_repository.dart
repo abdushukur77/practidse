@@ -1,5 +1,4 @@
-
-import 'package:practidse/data/models/book/book_model.dart';
+import 'package:practidse/data/models/card/card_model.dart';
 
 import '../api_provider/api_provider.dart';
 import '../response/my_response.dart';
@@ -9,8 +8,13 @@ class BooksRepository {
 
   final ApiProvider apiProvider;
 
-  Future<MyResponse> getBooks() => apiProvider.getBooks();
-  Future<MyResponse> addNewBooks(BookModel bookModel) => apiProvider.addNewBook(bookModel);
-  Future<MyResponse> updateNewBooks(BookModel bookModel) => apiProvider.updateBook(bookModel);
-  Future<MyResponse> deleteBooks(String uuid) => apiProvider.deleteBook(uuid);
+  Future<MyResponse> getCards() => apiProvider.getCards();
+
+  Future<MyResponse> addNewCard(CardModel bookModel) =>
+      apiProvider.addNewCard(bookModel);
+
+  Future<MyResponse> updateCard(CardModel bookModel) =>
+      apiProvider.updateCard(bookModel);
+
+  Future<MyResponse> deleteCard(String uuid) => apiProvider.deleteCard(uuid);
 }
