@@ -8,7 +8,7 @@ import 'package:practidse/blocs/books/cards_event.dart';
 import 'package:practidse/blocs/books/cards_state.dart';
 import 'package:practidse/data/models/card/card_model.dart';
 import 'package:practidse/notifications/locale_notifications.dart';
-import 'package:practidse/screens/add_new_card/add_mew_card_screen.dart';
+import 'package:practidse/screens/add_new_card/add_new_card_screen.dart';
 import 'package:practidse/screens/global_widgets/card_container.dart';
 import 'package:practidse/utils/colors/app_colors.dart';
 import 'package:practidse/utils/styles/app_text_style.dart';
