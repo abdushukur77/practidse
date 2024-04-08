@@ -131,7 +131,7 @@ class _CardScreenState extends State<CardScreen> {
                                             onPressed: () {
                                               context.read<CardsBloc>().add(
                                                 DeleteCardEvent(
-                                                      uuid: card.uuid!,
+                                                      uuid: card.uuid,
                                                     ),
                                                   );
 
