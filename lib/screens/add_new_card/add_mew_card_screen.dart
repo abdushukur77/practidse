@@ -86,10 +86,10 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
-              flex: 10,
+              flex: 6,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
-                physics: const BouncingScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(
                   horizontal: 20.w,
                   vertical: 10.h,
@@ -205,13 +205,172 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
                   color: AppColors.white,
                 ),
               ),
-            )
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Expanded(
+                child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ...List.generate(
+                    gradientColors.length,
+                    (index) => ZoomTapAnimation(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 5.w,
+                        ),
+                        height: 50.w,
+                        width: 50.w,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: gradientColors[index],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )),
+            const Spacer(),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 24.w,
+              ),
+              child: Ink(
+                height: 50.h,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(
+                    16.r,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
           ],
         ),
       ),
     );
   }
 }
+
+List<List<Color>> gradientColors = [
+  [
+    const Color(0xFF23F2E6),
+    const Color(0xFF2ACB4E),
+    const Color(0xFFC529FC),
+  ],
+  [
+    const Color(0xFFFFD951),
+    const Color(0xFFEC201B),
+  ],
+  [
+    const Color(0xFF006BFF),
+    const Color(0xFF343AD7),
+    const Color(0xFFF43DF7),
+  ],
+  [
+    const Color(0xFF4EDFFF),
+    const Color(0xFFFFD90F),
+    const Color(0xFF930BFD),
+  ],
+  [
+    const Color(0xFF0038FF),
+    const Color(0xFF00E0FF),
+    const Color(0xFF1FAEFF),
+  ],
+  [
+    const Color(0xFF0A7CCF),
+    const Color(0xFF22FF53),
+    const Color(0xFF22FF95),
+  ],
+  [
+    const Color(0xFF4D20FF),
+    const Color(0xFFE46289),
+    const Color(0xFFFF5789),
+  ],
+  [
+    const Color(0xFF00FFC2),
+    const Color(0xFF1CF2CC),
+    const Color(0xFF2F9FF1),
+  ],
+  [
+    const Color(0xFF001973),
+    const Color(0xFF00AAB8),
+    const Color(0xFF00E0FF),
+    const Color(0xFF423FC3),
+  ],
+  [
+    const Color(0xFFFF29A8),
+    const Color(0xFFFF7A00),
+    const Color(0xFFFFD481),
+  ],
+  [
+    const Color(0xFFFFDCC5),
+    const Color(0xFFB515D0),
+    const Color(0xFFB515D0).withOpacity(
+      0.8,
+    ),
+  ],
+  [
+    const Color(0xFF4EDFFF),
+    const Color(0xFF6A24FE),
+    const Color(0xFF929CF3),
+  ],
+  [
+    const Color(0xFF3F00B9),
+    const Color(0xFFE507B6),
+    const Color(0xFFFF8993),
+  ],
+  [
+    const Color(0xFF00EAFF),
+    const Color(0xFF4E29E4),
+    const Color(0xFF6A40D3),
+    const Color(0xFF9AAAFF),
+  ],
+  [
+    const Color(0xFF0466EE),
+    const Color(0xFF35DDA1),
+    const Color(0xFF46B835),
+  ],
+  [
+    const Color(0xFF0032EF),
+    const Color(0xFF1AC7FF),
+    const Color(0xFF339DFF),
+    const Color(0xFFFF16F0),
+  ],
+  [
+    const Color(0xFF9020FF),
+    const Color(0xFFEB20B2),
+    const Color(0xFFFF8B20),
+  ],
+  [
+    const Color(0xFF20E4FF),
+    const Color(0xFF4D20FF),
+    const Color(0xFFFFD90F),
+  ],
+  [
+    const Color(0xFF00A3FF),
+    const Color(0xFFFFBE40),
+    const Color(0xFFFFF065),
+  ],
+  [
+    const Color(0xFFFF22F6),
+    const Color(0xFFFF9900),
+    const Color(0xFF00A3FF),
+  ],
+];
 
 List<String> cardTypes = [
   "UZCARD",

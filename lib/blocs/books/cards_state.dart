@@ -17,6 +17,7 @@ class AddCardState extends CardsState {
 
   AddCardState(this.cardModel);
 }
+
 class UpdateCardState extends CardsState {
   final CardModel cardModel;
 
