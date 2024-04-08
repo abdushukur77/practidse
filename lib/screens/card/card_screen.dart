@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:practidse/utils/colors/app_colors.dart';
 import 'package:practidse/utils/images/app_images.dart';
 import 'package:practidse/utils/styles/app_text_style.dart';
+import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class CardScreen extends StatefulWidget {
   const CardScreen({super.key});
@@ -31,9 +32,9 @@ class _CardScreenState extends State<CardScreen> {
           ),
           centerTitle: true,
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
+            ZoomTapAnimation(
+              onTap: () {},
+              child: Icon(
                 Icons.add,
                 size: 20.w,
                 color: Colors.white,
