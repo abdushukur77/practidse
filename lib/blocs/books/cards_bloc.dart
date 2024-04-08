@@ -1,31 +1,31 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:practidse/blocs/books/books_state.dart';
+import 'package:practidse/blocs/books/cards_state.dart';
 import 'package:practidse/data/repositories/books_repository.dart';
 import '../../data/api_provider/api_provider.dart';
 import '../../data/models/card/card_model.dart';
-import 'books_event.dart';
+import 'cards_event.dart';
 
-class BooksBloc extends Bloc<BooksEvent, BooksState> {
-  BooksBloc({required this.booksRepository, this.bookModel})
+class CardsBloc extends Bloc<CardsEvent, BooksState> {
+  CardsBloc({required this.booksRepository, this.bookModel})
       : super(BooksInitialState()) {
-    on<GetBooksEvent>(_getBooks);
-    on<AddBookEvent>(_addBooks);
-    on<DeleteBookEvent>(_deleteBooks);
-    on<UpdateBookEvent>(_updateBooks);
+    on<GetCardsEvent>(_getBooks);
+    on<AddCardEvent>(_addBooks);
+    on<DeleteCardEvent>(_deleteBooks);
+    on<UpdateCardEvent>(_updateBooks);
   }
 
   CardModel? bookModel;
-  final BooksRepository booksRepository;
+  final CardsRepository booksRepository;
 }
 
 Future<void> _getBooks(
-  GetBooksEvent event,
+  GetCardsEvent event,
   Emitter<BooksState> emit,
 ) async {
   emit(BooksLoadingState());
   await Future.delayed(const Duration(seconds: 1));
   ApiProvider apiProvider = ApiProvider();
-  BooksRepository booksRepository = BooksRepository(
+  CardsRepository booksRepository = CardsRepository(
     apiProvider: apiProvider,
   );
   var response = await booksRepository.getCards();
@@ -37,15 +37,15 @@ Future<void> _getBooks(
 }
 
 Future<void> _addBooks(
-  AddBookEvent event,
+  AddCardEvent event,
   Emitter<BooksState> emit,
 ) async {
   emit(BooksLoadingState());
 
   try {
     ApiProvider apiProvider = ApiProvider();
-    BooksRepository booksRepository = BooksRepository(apiProvider: apiProvider);
-    var response = await booksRepository.addNewCard(event.bookModel);
+    CardsRepository booksRepository = CardsRepository(apiProvider: apiProvider);
+    var response = await booksRepository.addNewCard(event.cardModel);
 
     if (response.errorText.isNotEmpty) {
       emit(BooksErrorState(response.errorText));
@@ -56,15 +56,15 @@ Future<void> _addBooks(
 }
 
 Future<void> _updateBooks(
-  UpdateBookEvent event,
+  UpdateCardEvent event,
   Emitter<BooksState> emit,
 ) async {
   emit(BooksLoadingState());
 
   try {
     ApiProvider apiProvider = ApiProvider();
-    BooksRepository booksRepository = BooksRepository(apiProvider: apiProvider);
-    var response = await booksRepository.updateCard(event.bookModel);
+    CardsRepository booksRepository = CardsRepository(apiProvider: apiProvider);
+    var response = await booksRepository.updateCard(event.cardModel);
 
     if (response.errorText.isNotEmpty) {
       emit(BooksErrorState(response.errorText));
@@ -75,12 +75,12 @@ Future<void> _updateBooks(
 }
 
 Future<void> _deleteBooks(
-  DeleteBookEvent event,
+  DeleteCardEvent event,
   Emitter<BooksState> emit,
 ) async {
   try {
     ApiProvider apiProvider = ApiProvider();
-    BooksRepository booksRepository = BooksRepository(apiProvider: apiProvider);
+    CardsRepository booksRepository = CardsRepository(apiProvider: apiProvider);
     var response = await booksRepository.deleteCard(event.uuid);
 
     if (response.errorText.isNotEmpty) {

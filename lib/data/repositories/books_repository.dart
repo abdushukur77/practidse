@@ -3,8 +3,8 @@ import 'package:practidse/data/models/card/card_model.dart';
 import '../api_provider/api_provider.dart';
 import '../response/my_response.dart';
 
-class BooksRepository {
-  BooksRepository({required this.apiProvider});
+class CardsRepository {
+  CardsRepository({required this.apiProvider});
 
   final ApiProvider apiProvider;
 
