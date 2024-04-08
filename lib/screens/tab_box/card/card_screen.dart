@@ -11,6 +11,7 @@ import 'package:practidse/screens/add_new_card/add_mew_card_screen.dart';
 import 'package:practidse/screens/global_widgets/card_container.dart';
 import 'package:practidse/utils/colors/app_colors.dart';
 import 'package:practidse/utils/styles/app_text_style.dart';
+import 'package:practidse/utils/utility_functions/utility_functions.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class CardScreen extends StatefulWidget {
@@ -63,14 +64,11 @@ class _CardScreenState extends State<CardScreen> {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            }
-            if (state is CardsErrorState) {
+            } else if (state is CardsErrorState) {
               return Center(
                 child: Text(state.errorText),
               );
-            }
-
-            if (state is CardsSuccessState) {
+            } else if (state is CardsSuccessState) {
               return RefreshIndicator(
                 onRefresh: () {
                   return Future<void>.delayed(
@@ -94,6 +92,7 @@ class _CardScreenState extends State<CardScreen> {
                         scrollDirection: Axis.vertical,
                         padding: EdgeInsets.symmetric(
                           vertical: 10.h,
+                          // horizontal: 10.w,
                         ),
                         physics: const BouncingScrollPhysics(),
                         children: [
@@ -106,20 +105,84 @@ class _CardScreenState extends State<CardScreen> {
                                 cardNumber: card.cardNumber,
                                 cardHolderName: card.ownerName,
                                 expireDate: card.expireDate,
-                                colors: [
-                                  Color(
-                                    int.parse(
-                                      card.color[0],
-                                    ),
-                                  ),
-                                  Color(
-                                    int.parse(
-                                      card.color[1],
-                                    ),
-                                  ),
-                                ],
-                                amount: NumberFormat.currency(locale: "uz")
-                                    .format(card.amount), onDismissed: () {  }, uuid: card.uuid,
+                                colors: makeColor(
+                                  card.color,
+                                ),
+                                amount: NumberFormat.currency(
+                                  locale: "uz",
+                                ).format(
+                                  card.amount,
+                                ),
+                                voidCallback: () async {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        backgroundColor: AppColors.white,
+                                        title:
+                                            const Text("Ishonchingiz komilmi?"),
+                                        titleTextStyle:
+                                            AppTextStyle.interBold.copyWith(
+                                          color: AppColors.black,
+                                          fontSize: 20.sp,
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              context.read<CardsBloc>().add(
+                                                DeleteCardEvent(
+                                                      uuid: card.uuid!,
+                                                    ),
+                                                  );
+
+                                              Navigator.pop(context);
+                                              context.read<CardsBloc>().add(
+                                                    GetCardsEvent(),
+                                                  );
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  backgroundColor:
+                                                      Colors.lightBlueAccent,
+                                                  content: Text(
+                                                    textAlign: TextAlign.center,
+                                                    'BOOK DELETED SUCCESSFULLY!!!',
+                                                    style: AppTextStyle
+                                                        .interBold
+                                                        .copyWith(
+                                                      color: Colors.black,
+                                                      fontSize: 20.sp,
+                                                      fontWeight:
+                                                          FontWeight.w900,
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Text(
+                                              'Yes',
+                                              style: AppTextStyle.interBold
+                                                  .copyWith(
+                                                color: AppColors.black,
+                                              ),
+                                            ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text(
+                                              'No',
+                                              style: AppTextStyle.interBold
+                                                  .copyWith(
+                                                      color: AppColors.black),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
                               );
                             },
                           ),

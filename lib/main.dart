@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:practidse/blocs/books/cards_bloc.dart';
 import 'package:practidse/data/repositories/books_repository.dart';
+import 'package:practidse/permissions/app_permissions.dart';
 import 'package:practidse/screens/tab_box.dart';
 import 'package:practidse/utils/colors/app_colors.dart';
 import 'blocs/books/cards_event.dart';
 import 'data/api_provider/api_provider.dart';
 
-void main() {
+void main() async {
+  await AppPermissions.getNotificationsPermission();
   runApp(
     const App(),
   );

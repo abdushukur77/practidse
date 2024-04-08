@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:practidse/utils/colors/app_colors.dart';
 import 'package:practidse/utils/images/app_images.dart';
 import 'package:practidse/utils/styles/app_text_style.dart';
+import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class CardContainer extends StatelessWidget {
   const CardContainer({
@@ -13,7 +14,7 @@ class CardContainer extends StatelessWidget {
     required this.expireDate,
     required this.colors,
     required this.amount,
-    required this.onDismissed, required this.uuid,
+    required this.voidCallback,
   });
 
   final String cardType;
@@ -21,16 +22,13 @@ class CardContainer extends StatelessWidget {
   final String cardHolderName;
   final String expireDate;
   final String amount;
-  final String uuid;
   final List<Color> colors;
-  final Function() onDismissed;
+  final VoidCallback voidCallback;
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      key: Key(uuid),
-      onDismissed: (_) => onDismissed(),
-      background: Container(color: Colors.red),
+    return ZoomTapAnimation(
+      onLongTap: voidCallback,
       child: Container(
         width: double.infinity,
         margin: EdgeInsets.symmetric(
@@ -40,6 +38,10 @@ class CardContainer extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(
             16.r,
+          ),
+          border: Border.all(
+            color: AppColors.white,
+            width: 2.w,
           ),
           gradient: LinearGradient(
             begin: Alignment.topCenter,
