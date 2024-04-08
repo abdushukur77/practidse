@@ -7,6 +7,7 @@ import 'package:practidse/blocs/books/cards_bloc.dart';
 import 'package:practidse/blocs/books/cards_event.dart';
 import 'package:practidse/blocs/books/cards_state.dart';
 import 'package:practidse/data/models/card/card_model.dart';
+import 'package:practidse/screens/add_new_card/add_mew_card_screen.dart';
 import 'package:practidse/screens/global_widgets/card_container.dart';
 import 'package:practidse/utils/colors/app_colors.dart';
 import 'package:practidse/utils/styles/app_text_style.dart';
@@ -37,7 +38,14 @@ class _CardScreenState extends State<CardScreen> {
           centerTitle: true,
           actions: [
             ZoomTapAnimation(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddNewCardScreen(),
+                  ),
+                );
+              },
               child: Icon(
                 Icons.add,
                 size: 20.w,
