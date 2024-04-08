@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../utils/colors/app_colors.dart';
 import '../../utils/images/app_images.dart';
 import '../../utils/styles/app_text_style.dart';
@@ -12,7 +10,7 @@ class CardsScreen extends StatefulWidget {
   const CardsScreen({Key? key}) : super(key: key);
 
   @override
-  _CardsScreenState createState() => _CardsScreenState();
+  State<CardsScreen> createState() => _CardsScreenState();
 }
 
 class _CardsScreenState extends State<CardsScreen> {
@@ -72,7 +70,7 @@ class _CardsScreenState extends State<CardsScreen> {
             ),
           ],
         ),
-        body: Column(children: [
+        body: const Column(children: [
           Text("Cards")
         ],)
       ),
