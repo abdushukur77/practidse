@@ -17,6 +17,7 @@ class AddBookState extends BooksState {
 
   AddBookState(this.bookModel);
 }
+
 class UpdateBookState extends BooksState {
   final CardModel bookModel;
 

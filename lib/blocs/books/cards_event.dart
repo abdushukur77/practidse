@@ -9,6 +9,7 @@ class AddCardEvent extends CardsEvent {
 
   AddCardEvent({required this.cardModel});
 }
+
 class UpdateCardEvent extends CardsEvent {
   final CardModel cardModel;
 

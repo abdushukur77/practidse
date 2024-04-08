@@ -49,14 +49,18 @@ class _TabBoxState extends State<TabBox> {
           fontWeight: FontWeight.w700,
         ),
         elevation: 0,
-        items:  [
+        items: [
           BottomNavigationBarItem(
             activeIcon: Icon(
               Icons.credit_card_sharp,
               color: Colors.blue,
               size: 30.w,
             ),
-            icon: Icon(Icons.credit_card_sharp, color: Colors.white, size: 20.w,),
+            icon: Icon(
+              Icons.credit_card_sharp,
+              color: Colors.white,
+              size: 20.w,
+            ),
             label: "CARDS",
           ),
           BottomNavigationBarItem(
@@ -65,7 +69,11 @@ class _TabBoxState extends State<TabBox> {
               color: Colors.blue,
               size: 30.w,
             ),
-            icon: Icon(Icons.price_change_sharp, color: Colors.white, size: 20.w,),
+            icon: Icon(
+              Icons.price_change_sharp,
+              color: Colors.white,
+              size: 20.w,
+            ),
             label: "TRANSFER",
           ),
         ],

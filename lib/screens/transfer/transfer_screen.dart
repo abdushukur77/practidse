@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:practidse/screens/transfer/widget/card_widget.dart';
 import 'package:practidse/utils/colors/app_colors.dart';
 import 'package:practidse/utils/styles/app_text_style.dart';
 
@@ -24,6 +26,32 @@ class TransferScreen extends StatelessWidget {
               color: AppColors.white,
             ),
           ),
+        ),
+        body: Column(
+          children: [
+            SizedBox(
+              height: 240.h,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  CardWidget(
+                    balance: 10000,
+                    cardNumber: "5282 3456 7890 1289",
+                    color: '',
+                    bank: 'HamkorBank',
+                    expiredDate: '10/24',
+                  ),
+                  CardWidget(
+                    balance: 10000,
+                    cardNumber: "5282 3456 7890 1289",
+                    color: '',
+                    bank: 'HamkorBank',
+                    expiredDate: '10/24',
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
