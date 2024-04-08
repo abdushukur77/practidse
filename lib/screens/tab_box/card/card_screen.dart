@@ -111,7 +111,7 @@ class _CardScreenState extends State<CardScreen> {
                                   ),
                                 ],
                                 amount: NumberFormat.currency(locale: "uz")
-                                    .format(card.amount),
+                                    .format(card.amount), onDismissed: () {  }, uuid: card.uuid,
                               );
                             },
                           ),
