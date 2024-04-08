@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:practidse/blocs/books/cards_bloc.dart';
 import 'package:practidse/blocs/books/cards_event.dart';
 import 'package:practidse/blocs/books/cards_state.dart';
@@ -88,27 +89,32 @@ class _CardScreenState extends State<CardScreen> {
                         ),
                         physics: const BouncingScrollPhysics(),
                         children: [
-                          ...List.generate(state.cards.length, (index) {
-                            CardModel card = state.cards[index];
-                            return CardContainer(
-                              cardType: card.providerName,
-                              cardNumber: card.cardNumber,
-                              cardHolderName: card.ownerName,
-                              expireDate: card.expireDate,
-                              colors: [
-                                Color(
-                                  int.parse(
-                                    card.color[0],
+                          ...List.generate(
+                            state.cards.length,
+                            (index) {
+                              CardModel card = state.cards[index];
+                              return CardContainer(
+                                cardType: card.providerName,
+                                cardNumber: card.cardNumber,
+                                cardHolderName: card.ownerName,
+                                expireDate: card.expireDate,
+                                colors: [
+                                  Color(
+                                    int.parse(
+                                      card.color[0],
+                                    ),
                                   ),
-                                ),
-                                Color(
-                                  int.parse(
-                                    card.color[1],
+                                  Color(
+                                    int.parse(
+                                      card.color[1],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            );
-                          })
+                                ],
+                                amount: NumberFormat.currency(locale: "uz")
+                                    .format(card.amount),
+                              );
+                            },
+                          ),
                         ],
                       ),
                     ),

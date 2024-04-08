@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:practidse/utils/colors/app_colors.dart';
 import 'package:practidse/utils/images/app_images.dart';
 import 'package:practidse/utils/styles/app_text_style.dart';
 
@@ -11,12 +12,14 @@ class CardContainer extends StatelessWidget {
     required this.cardHolderName,
     required this.expireDate,
     required this.colors,
+    required this.amount,
   });
 
   final String cardType;
   final String cardNumber;
   final String cardHolderName;
   final String expireDate;
+  final String amount;
   final List<Color> colors;
 
   @override
@@ -64,7 +67,7 @@ class CardContainer extends StatelessWidget {
                     fontWeight: FontWeight.w800,
                     fontSize: 23.sp,
                   ),
-                )
+                ),
               ],
             ),
             SizedBox(
@@ -79,7 +82,33 @@ class CardContainer extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 25.h,
+              height: 15.h,
+            ),
+            Row(
+              children: [
+                Text(
+                  'KARTA HISOBI:',
+                  style: AppTextStyle.interBold.copyWith(
+                    color: AppColors.white,
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+                Text(
+                  amount,
+                  style: AppTextStyle.interBold.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 16.sp,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 15.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
