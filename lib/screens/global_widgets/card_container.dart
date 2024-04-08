@@ -6,7 +6,7 @@ import 'package:practidse/utils/styles/app_text_style.dart';
 
 class CardContainer extends StatelessWidget {
   const CardContainer({
-    Key? key,
+    super.key,
     required this.cardType,
     required this.cardNumber,
     required this.cardHolderName,
@@ -14,7 +14,7 @@ class CardContainer extends StatelessWidget {
     required this.colors,
     required this.amount,
     required this.onDismissed, required this.uuid,
-  }) : super(key: key);
+  });
 
   final String cardType;
   final String cardNumber;
