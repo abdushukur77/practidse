@@ -1,18 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../utils/styles/app_text_style.dart';
 
 class CardWidget extends StatelessWidget {
-  const CardWidget({super.key, required this.balance, required this.cardNumber, required this.expiredDate, required this.bank, required this.color});
-
+  const CardWidget({
+    super.key,
+    required this.balance,
+    required this.cardNumber,
+    required this.expiredDate,
+    required this.bank,
+    required this.color,
+  });
 
   final num balance;
   final String cardNumber;
   final String expiredDate;
   final String bank;
   final String color;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,9 +26,14 @@ class CardWidget extends StatelessWidget {
       width: 330.w,
       height: 220.h,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(40.r),
-        gradient: LinearGradient(
-          colors: [Colors.purple, Colors.pink],
+        borderRadius: BorderRadius.circular(
+          40.r,
+        ),
+        gradient: const LinearGradient(
+          colors: [
+            Colors.purple,
+            Colors.pink,
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -55,7 +65,7 @@ class CardWidget extends StatelessWidget {
             height: 20.h,
           ),
           Text(
-            "\$${balance}",
+            "\$$balance",
             style: AppTextStyle.interBold
                 .copyWith(color: Colors.white, fontSize: 30.sp),
           ),

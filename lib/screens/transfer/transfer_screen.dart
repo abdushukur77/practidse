@@ -33,7 +33,7 @@ class TransferScreen extends StatelessWidget {
               height: 240.h,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: [
+                children: const [
                   CardWidget(
                     balance: 10000,
                     cardNumber: "5282 3456 7890 1289",
