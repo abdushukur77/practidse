@@ -21,8 +21,12 @@ class CardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(13.w),
-      margin: EdgeInsets.all(10.w),
+      padding: EdgeInsets.all(
+        13.w,
+      ),
+      margin: EdgeInsets.all(
+        10.w,
+      ),
       width: 330.w,
       height: 220.h,
       decoration: BoxDecoration(
@@ -49,15 +53,20 @@ class CardWidget extends StatelessWidget {
             children: [
               Text(
                 "Current Balance",
-                style: AppTextStyle.interLight
-                    .copyWith(color: Colors.white, fontSize: 16.sp),
+                style: AppTextStyle.interLight.copyWith(
+                  color: Colors.white,
+                  fontSize: 16.sp,
+                ),
               ),
               Text(
                 bank,
                 style: AppTextStyle.interLight.copyWith(
-                    color: Colors.white.withOpacity(0.5),
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w500),
+                  color: Colors.white.withOpacity(
+                    0.5,
+                  ),
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),
@@ -66,25 +75,34 @@ class CardWidget extends StatelessWidget {
           ),
           Text(
             "\$$balance",
-            style: AppTextStyle.interBold
-                .copyWith(color: Colors.white, fontSize: 30.sp),
+            style: AppTextStyle.interBold.copyWith(
+              color: Colors.white,
+              fontSize: 30.sp,
+            ),
           ),
-          SizedBox(height: 30.h),
+          SizedBox(
+            height: 30.h,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 cardNumber,
                 style: AppTextStyle.interBold.copyWith(
-                    color: Colors.white,
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.w500),
+                  color: Colors.white,
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-              SizedBox(width: 30.w),
+              SizedBox(
+                width: 30.w,
+              ),
               Text(
                 expiredDate,
-                style: AppTextStyle.interBold
-                    .copyWith(color: Colors.white, fontSize: 12.sp),
+                style: AppTextStyle.interBold.copyWith(
+                  color: Colors.white,
+                  fontSize: 12.sp,
+                ),
               ),
             ],
           ),
