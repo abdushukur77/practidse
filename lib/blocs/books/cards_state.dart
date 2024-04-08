@@ -1,30 +1,30 @@
 import 'package:practidse/data/models/card/card_model.dart';
 
-abstract class BooksState {}
+abstract class CardsState {}
 
-class BooksSuccessState extends BooksState {
-  final List<CardModel> books;
+class CardsSuccessState extends CardsState {
+  final List<CardModel> cards;
 
-  BooksSuccessState({required this.books});
+  CardsSuccessState({required this.cards});
 }
 
-class BooksInitialState extends BooksState {}
+class CardsInitialState extends CardsState {}
 
-class BooksLoadingState extends BooksState {}
+class CardsLoadingState extends CardsState {}
 
-class AddBookState extends BooksState {
-  final CardModel bookModel;
+class AddCardState extends CardsState {
+  final CardModel cardModel;
 
-  AddBookState(this.bookModel);
+  AddCardState(this.cardModel);
 }
-class UpdateBookState extends BooksState {
-  final CardModel bookModel;
+class UpdateCardState extends CardsState {
+  final CardModel cardModel;
 
-  UpdateBookState(this.bookModel);
+  UpdateCardState(this.cardModel);
 }
 
-class BooksErrorState extends BooksState {
+class CardsErrorState extends CardsState {
   final String errorText;
 
-  BooksErrorState(this.errorText);
+  CardsErrorState(this.errorText);
 }

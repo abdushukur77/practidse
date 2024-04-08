@@ -13,9 +13,7 @@ class TransferScreen extends StatelessWidget {
         statusBarColor: AppColors.transparent,
       ),
       child: Scaffold(
-        backgroundColor: AppColors.c2A3256,
         appBar: AppBar(
-          backgroundColor: AppColors.c2A3256,
           centerTitle: true,
           elevation: 0,
           title: Text(

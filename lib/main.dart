@@ -66,7 +66,13 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               useMaterial3: true,
-              scaffoldBackgroundColor: AppColors.white,
+              scaffoldBackgroundColor: AppColors.black,
+              appBarTheme: const AppBarTheme(
+                backgroundColor: AppColors.black,
+              ),
+              bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+                backgroundColor: AppColors.black,
+              ),
             ),
             home: child,
           );

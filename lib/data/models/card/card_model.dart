@@ -5,7 +5,7 @@ class CardModel {
   final String cardNumber;
   final String ownerName;
   final double amount;
-  final String color;
+  final List<String> color;
   final String bankName;
   final String providerName;
   final bool isMain;
@@ -30,13 +30,13 @@ class CardModel {
     String? cardNumber,
     String? ownerName,
     double? amount,
-    String? color,
+    List<String>? color,
     String? bankName,
     String? providerName,
     bool? isMain,
   }) {
     return CardModel(
-      color: uuid ?? this.uuid,
+      color: color ?? this.color,
       amount: amount ?? this.amount,
       cardNumber: cardNumber ?? this.cardNumber,
       expireDate: expireDate ?? this.expireDate,
@@ -81,7 +81,11 @@ class CardModel {
   factory CardModel.fromJson(Map<String, dynamic> json) {
     return CardModel(
       uuid: json["_uuid"] as String? ?? "",
-      color: json["color"] as String? ?? "",
+      color: List<String>.from(json['color']) as List<String>? ??
+          [
+            "0xFF50727B",
+            "0xFF1C1678",
+          ],
       amount: (json["amount"] as num? ?? 0.0).toDouble(),
       cardNumber: json["card_number"] as String? ?? "",
       expireDate: json["expire_date"] as String? ?? "",
@@ -94,7 +98,10 @@ class CardModel {
   }
 
   static initial() => CardModel(
-        color: "",
+        color: [
+          "0xFF50727B",
+          "0xFF1C1678",
+        ],
         amount: 0.0,
         cardNumber: "",
         expireDate: "",
