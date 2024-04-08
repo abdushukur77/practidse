@@ -1,58 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:practidse/blocs/books/books_bloc.dart';
+import 'package:practidse/data/repositories/books_repository.dart';
+import 'package:practidse/screens/tab_box.dart';
+import 'package:practidse/utils/colors/app_colors.dart';
+import 'blocs/books/books_event.dart';
+import 'data/api_provider/api_provider.dart';
 
-import 'package:practidse/screens/tabs/card_screen.dart';
-
-import 'blocs/book_bloc.dart';
-import 'blocs/book_event.dart';
-import 'data/network/api_provider.dart';
-import 'data/repositories/book_repo.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
-  runApp(App());
+void main() {
+  runApp(
+    const App(),
+  );
 }
 
 class App extends StatelessWidget {
-  App({super.key});
-
-  // ApiProvider apiProvider = ApiProvider();
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
+    ApiProvider apiProvider = ApiProvider();
     return MultiRepositoryProvider(
       providers: [
-        // RepositoryProvider(create: (_) => ApiRepository(apiProvider: apiProvider)),
+        RepositoryProvider(
+          create: (_) => BooksRepository(
+            apiProvider: apiProvider,
+          ),
+        ),
       ],
-      child: const MyApp(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => BooksBloc(
+              booksRepository: context.read<BooksRepository>(),
+            )..add(
+                GetBooksEvent(),
+              ),
+          )
+        ],
+        child: const MyApp(),
+      ),
     );
   }
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({
+    super.key,
+  });
 
   @override
-  Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(414, 896),
-      builder: (context, child) {
-        ScreenUtil.init(context);
-        return MaterialApp(
-          // initialRoute: RouteNames.helloScreen,
-
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(useMaterial3: false),
-          home: child,
-        );
-      },
-      child: CardsScreen(),
-    );
-  }
+  Widget build(
+    BuildContext context,
+  ) =>
+      ScreenUtilInit(
+        designSize: const Size(
+          375,
+          812,
+        ),
+        builder: (context, child) {
+          ScreenUtil.init(
+            context,
+          );
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              useMaterial3: false,
+              scaffoldBackgroundColor: AppColors.white,
+            ),
+            home: child,
+          );
+        },
+        child: const TabBox(),
+      );
 }

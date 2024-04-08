@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:practidse/screens/tabs/card_screen.dart';
-import '../../utils/colors/app_colors.dart';
-import 'tabs/transfer_screen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:practidse/screens/card/card_screen.dart';
+import 'package:practidse/screens/transfer/transfer_screen.dart';
+import 'package:practidse/utils/colors/app_colors.dart';
+import 'package:practidse/utils/styles/app_text_style.dart';
 
 class TabBox extends StatefulWidget {
   const TabBox({super.key});
@@ -16,11 +18,7 @@ class _TabBoxState extends State<TabBox> {
 
   @override
   void initState() {
-    _screens = [
-      const CardsScreen(),
-      const TransferScreen(),
-
-    ];
+    _screens = const [CardScreen(), TransferScreen()];
     super.initState();
   }
 
@@ -28,29 +26,48 @@ class _TabBoxState extends State<TabBox> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_activeIndex],
-      backgroundColor: AppColors.c_1A72DD,
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: AppColors.white,
-        unselectedItemColor: Colors.grey,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: AppColors.c_1A72DD,
+        backgroundColor: AppColors.c2A3256,
         onTap: (newActiveIndex) {
           _activeIndex = newActiveIndex;
           setState(() {});
         },
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.white,
         currentIndex: _activeIndex,
-        items: const [
-
+        type: BottomNavigationBarType.fixed,
+        selectedFontSize: 18.w,
+        unselectedFontSize: 14.w,
+        selectedLabelStyle: AppTextStyle.interBold.copyWith(
+          color: Colors.blue,
+          fontSize: 18.w,
+          fontWeight: FontWeight.w900,
+        ),
+        unselectedLabelStyle: AppTextStyle.interBold.copyWith(
+          color: Colors.white,
+          fontSize: 14.w,
+          fontWeight: FontWeight.w700,
+        ),
+        elevation: 0,
+        items:  [
           BottomNavigationBarItem(
-              backgroundColor: AppColors.black,
-              activeIcon: Icon(Icons.credit_card),
-              icon: Icon(Icons.credit_card),
-              label: "Cards"),
+            activeIcon: Icon(
+              Icons.credit_card_sharp,
+              color: Colors.blue,
+              size: 30.w,
+            ),
+            icon: Icon(Icons.credit_card_sharp, color: Colors.white, size: 20.w,),
+            label: "CARDS",
+          ),
           BottomNavigationBarItem(
-              backgroundColor: AppColors.black,
-              activeIcon: Icon(Icons.send),
-              icon: Icon(Icons.send),
-              label: "Animation"),
+            activeIcon: Icon(
+              Icons.price_change_sharp,
+              color: Colors.blue,
+              size: 30.w,
+            ),
+            icon: Icon(Icons.price_change_sharp, color: Colors.white, size: 20.w,),
+            label: "TRANSFER",
+          ),
         ],
       ),
     );
