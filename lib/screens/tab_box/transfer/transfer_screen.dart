@@ -76,7 +76,10 @@ class _TransferScreenState extends State<TransferScreen> {
                               // active=index;
                               return Container(
                                 padding: EdgeInsets.only(
-                                    left: 15.w, top: 15.h, right: 15.w),
+                                  left: 15.w,
+                                  top: 15.h,
+                                  right: 15.w,
+                                ),
                                 width: double.infinity,
                                 margin: EdgeInsets.symmetric(
                                   horizontal: 8.w,
@@ -101,14 +104,14 @@ class _TransferScreenState extends State<TransferScreen> {
                                   children: [
                                     Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                      MainAxisAlignment.start,
                                       children: [
                                         Image.asset(
                                           AppImages.cipPng,
                                           width:
-                                              (active1 == index) ? 38.w : 10.sp,
+                                          (active1 == index) ? 38.w : 18.sp,
                                           height:
-                                              (active1 == index) ? 28.h : 5.sp,
+                                          (active1 == index) ? 28.h : 10.sp,
                                           fit: BoxFit.fill,
                                         ),
                                         SizedBox(
@@ -117,16 +120,27 @@ class _TransferScreenState extends State<TransferScreen> {
                                         Text(
                                           card.cardName,
                                           style:
-                                              AppTextStyle.interBold.copyWith(
+                                          AppTextStyle.interBold.copyWith(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w800,
                                             fontSize: 23.sp,
                                           ),
                                         ),
+                                        SizedBox(width: 20.w,),
+                                        Text(
+                                          card.expireDate,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: (active1 == index)
+                                                ? 16.sp
+                                                : 1.sp,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        )
                                       ],
                                     ),
                                     SizedBox(
-                                      height: (active1 == index) ? 10.h : 1.h,
+                                      height: 10.h,
                                     ),
                                     Text(
                                       card.cardNumber,
@@ -139,65 +153,33 @@ class _TransferScreenState extends State<TransferScreen> {
                                     SizedBox(
                                       height: (active1 == index) ? 15.h : 1.h,
                                     ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'KARTA HISOBI:',
-                                          style:
-                                              AppTextStyle.interBold.copyWith(
-                                            color: AppColors.white,
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10.w,
-                                        ),
-                                        Text(
-                                          NumberFormat.currency(
-                                            locale: "uz",
-                                          ).format(
-                                            card.amount,
-                                          ),
-                                          style:
-                                              AppTextStyle.interBold.copyWith(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: 14.sp,
-                                          ),
-                                        ),
-                                      ],
+                                    Text(
+                                      NumberFormat.currency(
+                                        locale: "uz",
+                                      ).format(
+                                        card.amount,
+                                      ),
+                                      style:
+                                      AppTextStyle.interBold.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 14.sp,
+                                      ),
                                     ),
                                     SizedBox(
-                                      height: (active1 == index) ? 15.h : 1.h,
+                                      height: 15.h,
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          card.ownerName,
-                                          style:
-                                              AppTextStyle.interBold.copyWith(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w800,
-                                            fontSize: (active1 == index)
-                                                ? 16.sp
-                                                : 10.sp,
-                                          ),
-                                        ),
-                                        Text(
-                                          card.expireDate,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: (active1 == index)
-                                                ? 16.sp
-                                                : 1.sp,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ],
-                                    )
+                                    Text(
+                                      card.ownerName,
+                                      style:
+                                      AppTextStyle.interBold.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: (active1 == index)
+                                            ? 16.sp
+                                            : 10.sp,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               );
@@ -208,7 +190,7 @@ class _TransferScreenState extends State<TransferScreen> {
                               viewportFraction: 0.81,
                               initialPage: active1,
                               enableInfiniteScroll: true,
-                              reverse: false,
+                              reverse: true,
                               autoPlayCurve: Curves.fastOutSlowIn,
                               enlargeCenterPage: true,
                               enlargeFactor: 0.3,
@@ -322,6 +304,17 @@ class _TransferScreenState extends State<TransferScreen> {
                                             fontSize: 23.sp,
                                           ),
                                         ),
+                                        SizedBox(width: 20.w,),
+                                        Text(
+                                          card.expireDate,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: (active2 == index)
+                                                ? 16.sp
+                                                : 1.sp,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        )
                                       ],
                                     ),
                                     SizedBox(
@@ -338,65 +331,33 @@ class _TransferScreenState extends State<TransferScreen> {
                                     SizedBox(
                                       height: (active2 == index) ? 15.h : 1.h,
                                     ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'KARTA HISOBI:',
-                                          style:
-                                              AppTextStyle.interBold.copyWith(
-                                            color: AppColors.white,
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10.w,
-                                        ),
-                                        Text(
-                                          NumberFormat.currency(
-                                            locale: "uz",
-                                          ).format(
-                                            card.amount,
-                                          ),
-                                          style:
-                                              AppTextStyle.interBold.copyWith(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: 14.sp,
-                                          ),
-                                        ),
-                                      ],
+                                    Text(
+                                      NumberFormat.currency(
+                                        locale: "uz",
+                                      ).format(
+                                        card.amount,
+                                      ),
+                                      style:
+                                          AppTextStyle.interBold.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 14.sp,
+                                      ),
                                     ),
                                     SizedBox(
                                       height: 15.h,
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          card.ownerName,
-                                          style:
-                                              AppTextStyle.interBold.copyWith(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w800,
-                                            fontSize: (active2 == index)
-                                                ? 16.sp
-                                                : 10.sp,
-                                          ),
-                                        ),
-                                        Text(
-                                          card.expireDate,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: (active2 == index)
-                                                ? 16.sp
-                                                : 1.sp,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ],
-                                    )
+                                    Text(
+                                      card.ownerName,
+                                      style:
+                                          AppTextStyle.interBold.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: (active2 == index)
+                                            ? 16.sp
+                                            : 10.sp,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               );
