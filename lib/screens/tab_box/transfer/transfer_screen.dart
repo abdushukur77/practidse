@@ -8,6 +8,7 @@ import 'package:practidse/blocs/books/cards_bloc.dart';
 import 'package:practidse/blocs/books/cards_event.dart';
 import 'package:practidse/blocs/books/cards_state.dart';
 import 'package:practidse/data/models/card/card_model.dart';
+import 'package:practidse/notifications/locale_notifications.dart';
 import 'package:practidse/screens/tab_box/card/card_screen.dart';
 import 'package:practidse/utils/colors/app_colors.dart';
 import 'package:practidse/utils/styles/app_text_style.dart';
@@ -22,8 +23,8 @@ class TransferScreen extends StatefulWidget {
 }
 
 class _TransferScreenState extends State<TransferScreen> {
-  int active1 = -1;
-  int active2 = -1;
+  int active1 = 0;
+  int active2 = 1;
   TextEditingController amountController = TextEditingController();
 
   @override
@@ -205,7 +206,7 @@ class _TransferScreenState extends State<TransferScreen> {
                               height: 185.h,
                               aspectRatio: 16 / 9,
                               viewportFraction: 0.81,
-                              initialPage: 0,
+                              initialPage: active1,
                               enableInfiniteScroll: true,
                               reverse: false,
                               autoPlayCurve: Curves.fastOutSlowIn,
@@ -404,7 +405,7 @@ class _TransferScreenState extends State<TransferScreen> {
                               height: 185.h,
                               aspectRatio: 16 / 9,
                               viewportFraction: 0.81,
-                              initialPage: 0,
+                              initialPage: active2,
                               enableInfiniteScroll: true,
                               reverse: false,
                               autoPlayCurve: Curves.fastOutSlowIn,
@@ -454,71 +455,66 @@ class _TransferScreenState extends State<TransferScreen> {
                                   ),
                                 ),
                               );
-                            } else if (state.cards[active1].amount <
-                                double.parse(amountController.text)) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  duration: const Duration(
-                                    seconds: 1,
-                                  ),
-                                  backgroundColor: Colors.red,
-                                  content: Text(
-                                    "Hisobda mablag' yetarli emas",
-                                    style: AppTextStyle.interMedium.copyWith(
-                                      color: AppColors.white,
-                                      fontSize: 16.sp,
+                            }
+                            if(amountController.text.isNotEmpty){
+                              if (state.cards[active1].amount <
+                                  double.parse(amountController.text)) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    duration: const Duration(
+                                      seconds: 1,
+                                    ),
+                                    backgroundColor: Colors.red,
+                                    content: Text(
+                                      "Hisobda mablag' yetarli emas",
+                                      style: AppTextStyle.interMedium.copyWith(
+                                        color: AppColors.white,
+                                        fontSize: 16.sp,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      content: Text(
-                                        'Ishonchingiz komilmi??',
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                            onPressed: () {
-                                              CardModel card1 =
-                                                  state.cards[active1];
-                                              CardModel card2 =
-                                                  state.cards[active2];
-                                              card1.copyWith(
-                                                  amount: card1.amount -
-                                                      double.parse(
-                                                          amountController
-                                                              .text));
-                                              card2.copyWith(
-                                                  amount: card2.amount +
-                                                      double.parse(
-                                                          amountController
-                                                              .text));
-                                              context.read<CardsBloc>().add(
-                                                  UpdateCardEvent(
-                                                      cardModel: card1));
-                                              context.read<CardsBloc>().add(
-                                                  UpdateCardEvent(
-                                                      cardModel: card2));
-                                              Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const CardsScreen(),
-                                                ),
-                                              );
-                                            },
-                                            child: Text('OK')),
-                                        TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text('CANCEL')),
-                                      ],
-                                    );
-                                  });
+                                );
+                              } else {
+                                CardModel card1 =
+                                state.cards[active1];
+                                CardModel card2 =
+                                state.cards[active2];
+                                card1.copyWith(
+                                    amount: card1.amount -
+                                        double.parse(
+                                            amountController
+                                                .text));
+                                card2.copyWith(
+                                    amount: card2.amount +
+                                        double.parse(
+                                            amountController
+                                                .text));
+                                CardModel firstCard = card1;
+                                CardModel secondCard = card2;
+                                context.read<CardsBloc>().add(
+                                    UpdateCardEvent(
+                                        cardModel: firstCard));
+                                context.read<CardsBloc>().add(
+                                    UpdateCardEvent(
+                                        cardModel: secondCard));
+
+                                LocalNotificationService()
+                                    .showNotification(
+                                  title:
+                                  "DIQQAT!!! PUL O'TKAZMASI!!!",
+                                  body:
+                                  "${state.cards[active1].cardNumber} DAN ${state.cards[active2]} GA ${amountController.text} MIQDORIDA O'TKAZMA AMALGA OSHIRILDI!!!",
+                                  id: DateTime.now().millisecond,
+                                );
+                                context.read<CardsBloc>().add(GetCardsEvent());
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                    const CardsScreen(),
+                                  ),
+                                );
+                              }
                             }
                           },
                           child: Text(
