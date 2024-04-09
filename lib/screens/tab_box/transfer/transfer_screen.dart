@@ -16,8 +16,15 @@
   class TransferScreen extends StatefulWidget {
     const TransferScreen({super.key});
 
-    @override
-    State<TransferScreen> createState() => _TransferScreenState();
+class _TransferScreenState extends State<TransferScreen> {
+  int active1 = 0;
+  int active2 = 1;
+  TextEditingController amountController = TextEditingController();
+
+  @override
+  void dispose() {
+    amountController.dispose();
+    super.dispose();
   }
 
   class _TransferScreenState extends State<TransferScreen> {
@@ -57,11 +64,12 @@
                         ),),
                         SizedBox(height: 10.h,),
                         CarouselSlider(
-                            items:List.generate(state.cards.length, (index){
-                              CardModel card=state.cards[index];
+                            items: List.generate(state.cards.length, (index) {
+                              CardModel card = state.cards[index];
                               // active=index;
                               return Container(
-                                padding:EdgeInsets.only(left: 15.w,top: 15.h,right: 15.w),
+                                padding: EdgeInsets.only(
+                                    left: 15.w, top: 15.h, right: 15.w),
                                 width: double.infinity,
                                 margin: EdgeInsets.symmetric(
                                   horizontal: 8.w,
@@ -78,19 +86,22 @@
                                   gradient: LinearGradient(
                                     begin: Alignment.topCenter,
                                     end: Alignment.bottomCenter,
-                                    colors:makeColor(card.color),
+                                    colors: makeColor(card.color),
                                   ),
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         Image.asset(
                                           AppImages.cipPng,
-                                          width: (active1==index)?38.w:10.sp,
-                                          height: (active1==index)?28.h:5.sp,
+                                          width:
+                                              (active1 == index) ? 38.w : 10.sp,
+                                          height:
+                                              (active1 == index) ? 28.h : 5.sp,
                                           fit: BoxFit.fill,
                                         ),
                                         SizedBox(
@@ -98,7 +109,8 @@
                                         ),
                                         Text(
                                           card.cardName,
-                                          style: AppTextStyle.interBold.copyWith(
+                                          style:
+                                              AppTextStyle.interBold.copyWith(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w800,
                                             fontSize: 23.sp,
@@ -107,7 +119,7 @@
                                       ],
                                     ),
                                     SizedBox(
-                                      height:(active1==index)?10.h:1.h,
+                                      height: (active1 == index) ? 10.h : 1.h,
                                     ),
                                     Text(
                                       card.cardNumber,
@@ -118,13 +130,14 @@
                                       ),
                                     ),
                                     SizedBox(
-                                      height: (active1==index)?15.h:1.h,
+                                      height: (active1 == index) ? 15.h : 1.h,
                                     ),
                                     Row(
                                       children: [
                                         Text(
                                           'KARTA HISOBI:',
-                                          style: AppTextStyle.interBold.copyWith(
+                                          style:
+                                              AppTextStyle.interBold.copyWith(
                                             color: AppColors.white,
                                             fontSize: 10.sp,
                                             fontWeight: FontWeight.w900,
@@ -139,7 +152,8 @@
                                           ).format(
                                             card.amount,
                                           ),
-                                          style: AppTextStyle.interBold.copyWith(
+                                          style:
+                                              AppTextStyle.interBold.copyWith(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w900,
                                             fontSize: 14.sp,
@@ -148,14 +162,16 @@
                                       ],
                                     ),
                                     SizedBox(
-                                      height: (active1==index)?15.h:1.h,
+                                      height: (active1 == index) ? 15.h : 1.h,
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           card.ownerName,
-                                          style: AppTextStyle.interBold.copyWith(
+                                          style:
+                                              AppTextStyle.interBold.copyWith(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w800,
                                             fontSize:(active1==index)? 14.sp:10.sp,
@@ -165,7 +181,9 @@
                                           card.expireDate,
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize:(active1==index)? 16.sp:1.sp,
+                                            fontSize: (active1 == index)
+                                                ? 16.sp
+                                                : 1.sp,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -176,17 +194,17 @@
                               );
                             }),
                             options: CarouselOptions(
-                              height:185.h,
-                              aspectRatio: 16/9,
+                              height: 185.h,
+                              aspectRatio: 16 / 9,
                               viewportFraction: 0.81,
-                              initialPage: 0,
+                              initialPage: active1,
                               enableInfiniteScroll: true,
                               reverse: false,
                               autoPlayCurve: Curves.fastOutSlowIn,
                               enlargeCenterPage: true,
                               enlargeFactor: 0.3,
-                              onPageChanged: (index,reason){
-                                active1=index;
+                              onPageChanged: (index, reason) {
+                                active1 = index;
                                 setState(() {});
                               },
                               scrollDirection: Axis.horizontal,
@@ -207,36 +225,46 @@
                             if(v!.length<4 && v.isNotEmpty){
                               return "Minimum 1000 som otkasish mumkin";
                             }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical:10.h,horizontal:14.w),
-                            errorBorder:const OutlineInputBorder(
-                              borderSide:BorderSide(width: 2,color: Colors.red)
-                            ),
-                            border: const OutlineInputBorder(
-                              borderSide: BorderSide(width: 1,color: AppColors.white)
-                            ),
-                            hintText: "Amount",
-                            hintStyle: AppTextStyle.interMedium.copyWith(
-                              color: AppColors.white,fontSize:16.sp
-                            ),
-
-                          ),
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10.h, horizontal: 14.w),
+                          errorBorder: const OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(width: 2, color: Colors.red)),
+                          border: const OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(width: 1, color: AppColors.white)),
+                          hintText: "Amount",
+                          hintStyle: AppTextStyle.interMedium.copyWith(
+                              color: AppColors.white, fontSize: 16.sp),
                         ),
                       ),
-                      Column(children: [
-                        SizedBox(height: 20.h,),
-                        Text("Qaysi kartga o'tkazmoqchisiz tanlang!!!",style: AppTextStyle.interMedium.copyWith(
-                            color:AppColors.white,fontSize:16.sp
-                        ),),
-                        SizedBox(height: 10.h,),
+                    ),
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Text(
+                          "Qaysi kartga o'tkazmoqchisiz tanlang!!!",
+                          style: AppTextStyle.interMedium.copyWith(
+                              color: AppColors.white, fontSize: 16.sp),
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
                         CarouselSlider(
-                            items:List.generate(state.cards.length, (index){
-                              CardModel card=state.cards[index];
-                              // active=index;
+                            items: List.generate(state.cards.length, (index) {
+                              CardModel card = state.cards[index];
                               return Container(
-                                padding:EdgeInsets.only(left: 15.w,top: 15.h,right: 15.w),
+                                padding: EdgeInsets.only(
+                                  left: 15.w,
+                                  top: 15.h,
+                                  right: 15.w,
+                                ),
                                 width: double.infinity,
                                 margin: EdgeInsets.symmetric(
                                   horizontal: 8.w,
@@ -253,19 +281,22 @@
                                   gradient: LinearGradient(
                                     begin: Alignment.topCenter,
                                     end: Alignment.bottomCenter,
-                                    colors:makeColor(card.color),
+                                    colors: makeColor(card.color),
                                   ),
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         Image.asset(
                                           AppImages.cipPng,
-                                          width: (active2==index)?38.w:18.sp,
-                                          height: (active2==index)?28.h:10.sp,
+                                          width:
+                                              (active2 == index) ? 38.w : 18.sp,
+                                          height:
+                                              (active2 == index) ? 28.h : 10.sp,
                                           fit: BoxFit.fill,
                                         ),
                                         SizedBox(
@@ -273,7 +304,8 @@
                                         ),
                                         Text(
                                           card.cardName,
-                                          style: AppTextStyle.interBold.copyWith(
+                                          style:
+                                              AppTextStyle.interBold.copyWith(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w800,
                                             fontSize: 23.sp,
@@ -293,13 +325,14 @@
                                       ),
                                     ),
                                     SizedBox(
-                                      height: (active2==index)?15.h:1.h,
+                                      height: (active2 == index) ? 15.h : 1.h,
                                     ),
                                     Row(
                                       children: [
                                         Text(
                                           'KARTA HISOBI:',
-                                          style: AppTextStyle.interBold.copyWith(
+                                          style:
+                                              AppTextStyle.interBold.copyWith(
                                             color: AppColors.white,
                                             fontSize: 10.sp,
                                             fontWeight: FontWeight.w900,
@@ -314,7 +347,8 @@
                                           ).format(
                                             card.amount,
                                           ),
-                                          style: AppTextStyle.interBold.copyWith(
+                                          style:
+                                              AppTextStyle.interBold.copyWith(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w900,
                                             fontSize: 14.sp,
@@ -326,11 +360,13 @@
                                       height: 15.h,
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           card.ownerName,
-                                          style: AppTextStyle.interBold.copyWith(
+                                          style:
+                                              AppTextStyle.interBold.copyWith(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w800,
                                             fontSize:(active2==index)? 14.sp:10.sp,
@@ -340,7 +376,9 @@
                                           card.expireDate,
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize:(active2==index)? 16.sp:1.sp,
+                                            fontSize: (active2 == index)
+                                                ? 16.sp
+                                                : 1.sp,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -351,45 +389,58 @@
                               );
                             }),
                             options: CarouselOptions(
-                              height:185.h,
-                              aspectRatio: 16/9,
+                              height: 185.h,
+                              aspectRatio: 16 / 9,
                               viewportFraction: 0.81,
-                              initialPage: 0,
+                              initialPage: active2,
                               enableInfiniteScroll: true,
                               reverse: false,
                               autoPlayCurve: Curves.fastOutSlowIn,
                               enlargeCenterPage: true,
                               enlargeFactor: 0.3,
-                              onPageChanged: (index,reason){
-                                active2=index;
+                              onPageChanged: (index, reason) {
+                                active2 = index;
                                 setState(() {});
                               },
                               scrollDirection: Axis.horizontal,
-                            )
-                        )
-                      ],),
-                      Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.symmetric(horizontal: 44.w),
-                        child: TextButton(
+                            ))
+                      ],
+                    ),
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.symmetric(horizontal: 44.w),
+                      child: TextButton(
                           style: TextButton.styleFrom(
-                            backgroundColor:Colors.green,
+                            backgroundColor: Colors.green,
                           ),
-                            onPressed: (){
-                            if(active1==active2){
+                          onPressed: () {
+                            if (active1 == active2) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   duration: const Duration(seconds: 1),
-                                    backgroundColor: Colors.red,
-                                    content: Text('Kartalar xar xil bolishi kerak',style: AppTextStyle.interMedium.copyWith(color: AppColors.white,fontSize:16.sp),))
+                                  backgroundColor: Colors.red,
+                                  content: Text(
+                                    "YUBORUVCHI VA QABUL QILUVCHI KARTALAR HAR XIL BO'LISHI KERAK!!!",
+                                    style: AppTextStyle.interMedium.copyWith(
+                                        color: AppColors.white,
+                                        fontSize: 16.sp),
+                                  ),
+                                ),
                               );
                             }
                             else if(amountController.text.length<4 && amountController.text.isNotEmpty){
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      duration:const Duration(seconds: 1),
-                                      backgroundColor: Colors.red,
-                                      content: Text("Hisobda mablag' yetarli emas",style: AppTextStyle.interMedium.copyWith(color: AppColors.white,fontSize:16.sp),))
+                                SnackBar(
+                                  duration: const Duration(seconds: 1),
+                                  backgroundColor: Colors.red,
+                                  content: Text(
+                                    "KAMIDA 1000 UZS O'TKAZMA AMALGA OSHIRISH MUMKIN!!!",
+                                    style: AppTextStyle.interMedium.copyWith(
+                                      color: AppColors.white,
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
+                                ),
                               );
                             }
                             else if(amountController.text.isEmpty){
@@ -424,22 +475,32 @@
                                    }, child:const Text('CANCEL')),
                                  ],
                                 );
-                              });
+                                context.read<CardsBloc>().add(GetCardsEvent());
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                    const CardsScreen(),
+                                  ),
+                                );
+                              }
                             }
-                            },
-                            child:Text("O'tkazish",style: AppTextStyle.interRegular.copyWith(
-                              color: AppColors.white,fontSize: 16.sp
-                            ),)),
-                      )
-                    ],
-                  ),
-                );
-              }
-              return const SizedBox();
-            }, listener: (BuildContext context, CardsState state) {  },
-          ),
+                          },
+                          child: Text(
+                            "O'tkazish",
+                            style: AppTextStyle.interRegular.copyWith(
+                                color: AppColors.white, fontSize: 16.sp),
+                          )),
+                    )
+                  ],
+                ),
+              );
+            }
+            return const SizedBox();
+          },
+          listener: (BuildContext context, CardsState state) {},
         ),
-      );
-    }
-
+      ),
+    );
   }
+}
