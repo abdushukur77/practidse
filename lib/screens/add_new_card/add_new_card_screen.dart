@@ -114,7 +114,7 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
-              flex: 6,
+              flex: 9,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 physics: const NeverScrollableScrollPhysics(),
@@ -134,7 +134,7 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
                             vertical: 3.h,
                           ),
                           child: SizedBox(
-                            height: 45.h,
+                            height: 50.h,
                             child: TextFormField(
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
@@ -154,7 +154,7 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
                                   }
                                 }
                                 if (index == 2) {
-                                  if (v == null || v.length < 5) {
+                                  if (v == null) {
                                     return "ILTIMOS, BANK NOMINI TO'LIQ KIRITING!!!";
                                   }
                                 }
