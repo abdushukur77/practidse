@@ -8,6 +8,7 @@ import 'package:practidse/blocs/books/cards_bloc.dart';
 import 'package:practidse/blocs/books/cards_event.dart';
 import 'package:practidse/blocs/books/cards_state.dart';
 import 'package:practidse/data/models/card/card_model.dart';
+import 'package:practidse/screens/tab_box/card/card_screen.dart';
 import 'package:practidse/utils/colors/app_colors.dart';
 import 'package:practidse/utils/styles/app_text_style.dart';
 import 'package:practidse/utils/utility_functions/utility_functions.dart';
@@ -24,6 +25,12 @@ class _TransferScreenState extends State<TransferScreen> {
   int active1 = -1;
   int active2 = -1;
   TextEditingController amountController = TextEditingController();
+
+  @override
+  void dispose() {
+    amountController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -420,32 +427,35 @@ class _TransferScreenState extends State<TransferScreen> {
                           ),
                           onPressed: () {
                             if (active1 == active2) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                      duration: const Duration(seconds: 1),
-                                      backgroundColor: Colors.red,
-                                      content: Text(
-                                        "YUBORUVCHI VA QABUL QILUVCHI KARTALAR HAR XIL BO'LISHI KERAK!!!",
-                                        style: AppTextStyle.interMedium
-                                            .copyWith(
-                                                color: AppColors.white,
-                                                fontSize: 16.sp),
-                                      ),),);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  duration: const Duration(seconds: 1),
+                                  backgroundColor: Colors.red,
+                                  content: Text(
+                                    "YUBORUVCHI VA QABUL QILUVCHI KARTALAR HAR XIL BO'LISHI KERAK!!!",
+                                    style: AppTextStyle.interMedium.copyWith(
+                                        color: AppColors.white,
+                                        fontSize: 16.sp),
+                                  ),
+                                ),
+                              );
                             }
-                            if(amountController.text.isEmpty){
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                duration: const Duration(seconds: 1),
-                                backgroundColor: Colors.red,
-                                content: Text(
-                                  "KAMIDA 1000 UZS O'TKAZMA AMALGA OSHIRISH MUMKIN!!!",
-                                  style: AppTextStyle.interMedium
-                                      .copyWith(
+                            if (amountController.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  duration: const Duration(seconds: 1),
+                                  backgroundColor: Colors.red,
+                                  content: Text(
+                                    "KAMIDA 1000 UZS O'TKAZMA AMALGA OSHIRISH MUMKIN!!!",
+                                    style: AppTextStyle.interMedium.copyWith(
                                       color: AppColors.white,
-                                      fontSize: 16.sp,),
-                                ),),);
-                            }
-                            if (state.cards[active1].amount < double.parse(amountController.text)) {
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            } else if (state.cards[active1].amount <
+                                double.parse(amountController.text)) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   duration: const Duration(
@@ -486,14 +496,19 @@ class _TransferScreenState extends State<TransferScreen> {
                                                       double.parse(
                                                           amountController
                                                               .text));
-                                              amountController.text = '';
                                               context.read<CardsBloc>().add(
                                                   UpdateCardEvent(
                                                       cardModel: card1));
                                               context.read<CardsBloc>().add(
                                                   UpdateCardEvent(
                                                       cardModel: card2));
-                                              Navigator.pop(context);
+                                              Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const CardsScreen(),
+                                                ),
+                                              );
                                             },
                                             child: Text('OK')),
                                         TextButton(

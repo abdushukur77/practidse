@@ -18,7 +18,7 @@ class _TabBoxState extends State<TabBox> {
   @override
   void initState() {
     _screens = const [
-      CardScreen(),
+      CardsScreen(),
       TransferScreen(),
     ];
     super.initState();

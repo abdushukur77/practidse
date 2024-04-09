@@ -15,14 +15,14 @@ import 'package:practidse/utils/styles/app_text_style.dart';
 import 'package:practidse/utils/utility_functions/utility_functions.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
-class CardScreen extends StatefulWidget {
-  const CardScreen({super.key});
+class CardsScreen extends StatefulWidget {
+  const CardsScreen({super.key});
 
   @override
-  State<CardScreen> createState() => _CardScreenState();
+  State<CardsScreen> createState() => _CardsScreenState();
 }
 
-class _CardScreenState extends State<CardScreen> {
+class _CardsScreenState extends State<CardsScreen> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
