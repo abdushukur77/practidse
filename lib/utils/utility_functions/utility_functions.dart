@@ -15,6 +15,24 @@ List<Color> makeColor(List<String> colors) {
   return madeColors;
 }
 
+List<String> cardTypes = [
+  "UZCARD",
+  "HUMO",
+  "VISA",
+  "MASTERCARD",
+  "UNION PAY",
+];
+
+List<String> madeColorList(int index) {
+  List<String> colors = [];
+  for (int i = 0; i < gradientColors[index].length; i++) {
+    colors.add(
+      gradientColors[index][i].value.toString(),
+    );
+  }
+  return colors;
+}
+
 List<List<Color>> gradientColors = [
   [
     const Color(0xFF23F2E6),

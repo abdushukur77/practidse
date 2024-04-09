@@ -44,7 +44,13 @@ class _CardScreenState extends State<CardScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const AddNewCardScreen(),
+                    builder: (context) => AddNewCardScreen(
+                      voidCallback: () {
+                        context.read<CardsBloc>().add(
+                              GetCardsEvent(),
+                            );
+                      },
+                    ),
                   ),
                 );
               },

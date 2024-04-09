@@ -14,7 +14,12 @@ import 'package:practidse/utils/utility_functions/utility_functions.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class AddNewCardScreen extends StatefulWidget {
-  const AddNewCardScreen({super.key});
+  const AddNewCardScreen({
+    super.key,
+    required this.voidCallback,
+  });
+
+  final Function voidCallback;
 
   @override
   State<AddNewCardScreen> createState() => _AddNewCardScreenState();
@@ -22,23 +27,31 @@ class AddNewCardScreen extends StatefulWidget {
 
 class _AddNewCardScreenState extends State<AddNewCardScreen> {
   final TextInputType holderNameInputType = TextInputType.text;
+  final TextInputType cardNameInputType = TextInputType.text;
+  final TextInputType bankNameInputType = TextInputType.text;
   final TextInputType cardNumberInputType = TextInputType.number;
   final TextInputType amountInputType = TextInputType.number;
   final TextInputType expireDateInputType = TextInputType.datetime;
 
   List<TextInputType> inputTypes = [];
   final List<String> titles = [
-    "HOLDER NAME",
-    "CARD NUMBER",
-    "AMOUNT",
-    "EXPIRE DATE",
+    "KARTA EGASI:",
+    "BANK NOMI:",
+    "KARTA NOMI:",
+    "KARTA RAQAMI:",
+    "BALANSI:",
+    "AMAL QILISH MUDDATI:",
   ];
   List<String> values = [
     "",
     "",
     "",
     "",
+    "",
+    "",
   ];
+
+  bool isMain = false;
 
   @override
   void initState() {
@@ -49,6 +62,8 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
   _init() {
     inputTypes = [
       holderNameInputType,
+      bankNameInputType,
+      cardNameInputType,
       cardNumberInputType,
       amountInputType,
       expireDateInputType,
@@ -58,6 +73,7 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
   var formKey = GlobalKey<FormState>();
   int activeTypeIndex = -1;
   int activeColorIndex = -1;
+  String cardType = '';
 
   @override
   Widget build(BuildContext context) {
@@ -104,69 +120,88 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(
                   horizontal: 20.w,
-                  vertical: 10.h,
                 ),
                 child: Form(
                   key: formKey,
                   child: Column(
+                    mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       ...List.generate(
                         inputTypes.length,
                         (index) => Padding(
                           padding: EdgeInsets.symmetric(
-                            vertical: 10.h,
+                            vertical: 3.h,
                           ),
-                          child: TextFormField(
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            onChanged: (v) {
-                              values[index] = v;
-                              setState(() {});
-                            },
-                            validator: (String? v) {
-                              if (index == 0) {
-                                if (v == null || v.length < 10) {
-                                  return "ILTIMOS, ISM FAMILYANGIZNI TO'LIQ KIRITING!!!";
-                                }
-                              }
-                              if (index == 1) {
-                                if (v == null ||
-                                    v.length < 16 ||
-                                    v.length > 16) {
-                                  return 'KARTA RAQAMI 16 XONALIK BOLISHI KERAK!!!';
-                                }
-                              }
-                              if (index == 2) {
-                                if (v!.isEmpty) {
-                                  return "ILTIMOS, KAMIDA 1000 UZS KIRITING!!!";
-                                } else {
-                                  if (int.parse(v) < 1000) {
-                                    return "BALANSINGIZDA KAMIDA 1000 UZS BO'LISHI KERAK!!!";
+                          child: SizedBox(
+                            height: 45.h,
+                            child: TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              onChanged: (v) {
+                                values[index] = v;
+                                setState(() {});
+                              },
+                              validator: (String? v) {
+                                if (index == 0) {
+                                  if (v == null || v.length < 10) {
+                                    return "ILTIMOS, ISM FAMILYANGIZNI TO'LIQ KIRITING!!!";
                                   }
                                 }
-                              }
-                              if (index == 3) {
-                                // if(){}
-                              }
-                              return null;
-                            },
-                            style: AppTextStyle.interBold.copyWith(
-                              color: AppColors.white,
-                            ),
-                            keyboardType: inputTypes[index],
-                            textInputAction: index == 3
-                                ? TextInputAction.done
-                                : TextInputAction.next,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                  16.r,
-                                ),
-                              ),
-                              hintText: titles[index],
-                              hintStyle: AppTextStyle.interBold.copyWith(
+                                if (index == 1) {
+                                  if (v == null || v.length < 5) {
+                                    return "ILTIMOS, BANK NOMINI TO'LIQ KIRITING!!!";
+                                  }
+                                }
+                                if (index == 2) {
+                                  if (v == null || v.length < 5) {
+                                    return "ILTIMOS, BANK NOMINI TO'LIQ KIRITING!!!";
+                                  }
+                                }
+                                if (index == 3) {
+                                  if (v == null ||
+                                      v.length < 16 ||
+                                      v.length > 16) {
+                                    return 'KARTA RAQAMI 16 XONALIK BOLISHI KERAK!!!';
+                                  }
+                                }
+                                if (index == 4) {
+                                  if (v!.isEmpty) {
+                                    return "ILTIMOS, KAMIDA 1000 UZS KIRITING!!!";
+                                  } else {
+                                    if (int.parse(v) < 1000) {
+                                      return "BALANSINGIZDA KAMIDA 1000 UZS BO'LISHI KERAK!!!";
+                                    }
+                                  }
+                                }
+                                if (index == 5) {
+                                  // if(){}
+                                }
+                                return null;
+                              },
+                              style: AppTextStyle.interBold.copyWith(
                                 color: AppColors.white,
+                              ),
+                              keyboardType: inputTypes[index],
+                              textInputAction: index == 5
+                                  ? TextInputAction.done
+                                  : TextInputAction.next,
+                              decoration: InputDecoration(
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.red,
+                                   width:  2.w,
+                                  )
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    16.r,
+                                  ),
+                                ),
+                                hintText: titles[index],
+                                hintStyle: AppTextStyle.interBold.copyWith(
+                                  color: AppColors.white,
+                                ),
                               ),
                             ),
                           ),
@@ -200,6 +235,7 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
                       (index) => ZoomTapAnimation(
                         onTap: () {
                           activeTypeIndex = index;
+                          cardType = cardTypes[index];
                           setState(() {});
                         },
                         child: Container(
@@ -234,7 +270,7 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
               ),
             ),
             SizedBox(
-              height: 20.h,
+              height: 10.h,
             ),
             Center(
               child: Text(
@@ -248,66 +284,89 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
               height: 10.h,
             ),
             Expanded(
-                child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ...List.generate(
-                    gradientColors.length,
-                    (index) => ZoomTapAnimation(
-                      onTap: () {
-                        activeColorIndex = index;
-                        setState(() {});
-                      },
-                      child: Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: 5.w,
-                        ),
-                        height: activeColorIndex == index ? 70.w : 50.w,
-                        width: activeColorIndex == index ? 70.w : 50.w,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: gradientColors[index],
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ...List.generate(
+                      gradientColors.length,
+                      (index) => ZoomTapAnimation(
+                        onTap: () {
+                          activeColorIndex = index;
+                          setState(() {});
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                            horizontal: 5.w,
                           ),
-                        ),
-                        child: Center(
-                          child: activeColorIndex == index
-                              ? Container(
-                                  height: 35.w,
-                                  width: 35.w,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: AppColors.black,
-                                  ),
-                                  child: Center(
+                          height: activeColorIndex == index ? 50.w : 40.w,
+                          width: activeColorIndex == index ? 50.w : 40.w,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: gradientColors[index],
+                            ),
+                          ),
+                          child: Center(
+                            child: activeColorIndex == index
+                                ? Center(
                                     child: SvgPicture.asset(
                                       AppImages.tick,
-                                      width: 30.w,
-                                      height: 30.h,
+                                      width: 20.w,
+                                      height: 20.h,
                                       fit: BoxFit.fill,
                                     ),
-                                  ),
-                                )
-                              : const SizedBox(),
+                                  )
+                                : const SizedBox(),
+                          ),
                         ),
                       ),
                     ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 24.w,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "ASOSIY QILIB BELGILANSINMI?",
+                    style: AppTextStyle.interBold.copyWith(
+                      color: AppColors.white,
+                    ),
+                  ),
+                  Switch(
+                    value: isMain,
+                    onChanged: (value) {
+                      setState(() {
+                        isMain = value;
+                        debugPrint("\$\$\$\$\$\n$value\n\$\$\$\$\$");
+                      });
+                    },
                   ),
                 ],
               ),
-            )),
-            const Spacer(),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: 24.w,
               ),
               child: Ink(
-                height: 50.h,
+                height: 40.h,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.indigoAccent,
@@ -320,22 +379,22 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
                     16.r,
                   ),
                   onTap: () {
-                    if (formKey.currentState!.validate()) {
+                    if (formKey.currentState!.validate() &&
+                        cardType != '' &&
+                        activeColorIndex != -1 &&
+                        activeTypeIndex != -1 &&
+                        cardType != '') {
                       CardModel cardModel = CardModel(
-                        color: [
-                          "0xFF23F2E6",
-                          "0xFF2ACB4E",
-                          "0xFFC529FC",
-                        ],
-                        amount: double.parse(values[2]),
-                        cardNumber: values[1],
-                        expireDate: values[3],
-                        bankName: "MILLIY BANK",
-                        cardName: "HOME",
-                        isMain: false,
+                        color: madeColorList(activeColorIndex),
+                        amount: double.parse(values[4]),
+                        cardNumber: values[3],
+                        expireDate: values[5],
+                        bankName: values[1],
+                        cardName: values[2],
+                        isMain: isMain,
                         ownerName: values[0],
                         uuid: '',
-                        providerName: "UZCARD",
+                        providerName: cardType,
                       );
                       context.read<CardsBloc>().add(
                             AddCardEvent(
@@ -357,6 +416,7 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
                             "${values[1]} RAQAMLI KARTA MUVAFFAQIYATLI QO'SHILDI!!!",
                         id: DateTime.now().millisecond,
                       );
+                      widget.voidCallback.call();
                       Navigator.pop(context);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -388,11 +448,3 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
     );
   }
 }
-
-List<String> cardTypes = [
-  "UZCARD",
-  "HUMO",
-  "VISA",
-  "MASTERCARD",
-  "UNION PAY",
-];
