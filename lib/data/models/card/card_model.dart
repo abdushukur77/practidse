@@ -83,8 +83,8 @@ class CardModel {
       uuid: json["_uuid"] as String? ?? "",
       color: List<String>.from(json['color']) as List<String>? ??
           [
-            "0xFF50727B",
-            "0xFF1C1678",
+              "0xFF50727B",
+              "0xFF1C1678",
           ],
       amount: (json["amount"] as num? ?? 0.0).toDouble(),
       cardNumber: json["card_number"] as String? ?? "",

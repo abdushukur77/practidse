@@ -18,7 +18,7 @@ class ApiClient {
       receiveTimeout: const Duration(seconds: 5),
       headers: {
         "Authorization": "Bearer ${AppConstants.apiKey}",
-        "Content-Type": "application/Json"
+        "Content-Type": "application/json"
       },
     );
 
