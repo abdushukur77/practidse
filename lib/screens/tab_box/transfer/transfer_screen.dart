@@ -1,26 +1,20 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
-import 'package:practidse/blocs/books/cards_bloc.dart';
-import 'package:practidse/blocs/books/cards_event.dart';
-import 'package:practidse/blocs/books/cards_state.dart';
-import 'package:practidse/data/models/card/card_model.dart';
-import 'package:practidse/notifications/locale_notifications.dart';
-import 'package:practidse/screens/tab_box/card/card_screen.dart';
-import 'package:practidse/utils/colors/app_colors.dart';
-import 'package:practidse/utils/styles/app_text_style.dart';
-import 'package:practidse/utils/utility_functions/utility_functions.dart';
-import '../../../utils/images/app_images.dart';
-
-class TransferScreen extends StatefulWidget {
-  const TransferScreen({super.key});
-
-  @override
-  State<TransferScreen> createState() => _TransferScreenState();
-}
+  import 'package:carousel_slider/carousel_slider.dart';
+  import 'package:flutter/cupertino.dart';
+  import 'package:flutter/material.dart';
+  import 'package:flutter/services.dart';
+  import 'package:flutter_bloc/flutter_bloc.dart';
+  import 'package:flutter_screenutil/flutter_screenutil.dart';
+  import 'package:intl/intl.dart';
+  import 'package:practidse/blocs/books/cards_bloc.dart';
+  import 'package:practidse/blocs/books/cards_event.dart';
+  import 'package:practidse/blocs/books/cards_state.dart';
+  import 'package:practidse/data/models/card/card_model.dart';
+  import 'package:practidse/utils/colors/app_colors.dart';
+  import 'package:practidse/utils/styles/app_text_style.dart';
+  import 'package:practidse/utils/utility_functions/utility_functions.dart';
+  import '../../../utils/images/app_images.dart';
+  class TransferScreen extends StatefulWidget {
+    const TransferScreen({super.key});
 
 class _TransferScreenState extends State<TransferScreen> {
   int active1 = 0;
@@ -33,43 +27,42 @@ class _TransferScreenState extends State<TransferScreen> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return AnnotatedRegion(
-      value: const SystemUiOverlayStyle(
-        statusBarColor: AppColors.transparent,
-      ),
-      child: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 40,
-          centerTitle: true,
-          elevation: 0,
-          title: Text(
-            'TRANSFER',
-            style: AppTextStyle.interBold.copyWith(
-              color: AppColors.white,
+  class _TransferScreenState extends State<TransferScreen> {
+    int active1=0;
+    int active2=0;
+    TextEditingController amountController=TextEditingController();
+    @override
+    Widget build(BuildContext context) {
+      return AnnotatedRegion(
+        value: const SystemUiOverlayStyle(
+          statusBarColor: AppColors.transparent,
+        ),
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            elevation: 0,
+            title: Text(
+              'TRANSFER',
+              style: AppTextStyle.interBold.copyWith(
+                color: AppColors.white,
+              ),
             ),
           ),
-        ),
-        body: BlocConsumer<CardsBloc, CardsState>(
-          builder: (context, state) {
-            if (state is CardsSuccessState) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        Text(
-                          "Qaysi kartadan o'tkazmoqchisiz tanlang!!!",
-                          style: AppTextStyle.interMedium.copyWith(
-                              color: AppColors.white, fontSize: 16.sp),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
+          body:BlocConsumer<CardsBloc,CardsState>(
+            builder: (context,state){
+              if(state is CardsLoadingState){
+                return const Center(child: CircularProgressIndicator(),);
+              }
+              if(state is CardsSuccessState){
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Column(children: [
+                        SizedBox(height: 20.h,),
+                        Text("Qaysi kartadan o'tkazmoqchisiz tanlang!!!",style: AppTextStyle.interMedium.copyWith(
+                            color:AppColors.white,fontSize:16.sp
+                        ),),
+                        SizedBox(height: 10.h,),
                         CarouselSlider(
                             items: List.generate(state.cards.length, (index) {
                               CardModel card = state.cards[index];
@@ -181,9 +174,7 @@ class _TransferScreenState extends State<TransferScreen> {
                                               AppTextStyle.interBold.copyWith(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w800,
-                                            fontSize: (active1 == index)
-                                                ? 16.sp
-                                                : 10.sp,
+                                            fontSize:(active1==index)? 14.sp:10.sp,
                                           ),
                                         ),
                                         Text(
@@ -217,23 +208,21 @@ class _TransferScreenState extends State<TransferScreen> {
                                 setState(() {});
                               },
                               scrollDirection: Axis.horizontal,
-                            ))
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 44.w),
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        controller: amountController,
-                        style: AppTextStyle.interRegular
-                            .copyWith(color: AppColors.white, fontSize: 16.sp),
-                        autovalidateMode: AutovalidateMode.always,
-                        validator: (String? v) {
-                          if (v!.isNotEmpty) {
-                            if (int.parse(v) < 1000) {
+                            )
+                        )
+                      ],),
+                      SizedBox(height:10.h,),
+                      Padding(
+                        padding:EdgeInsets.symmetric(horizontal:44.w),
+                        child: TextFormField(
+                          controller: amountController,
+                          style: AppTextStyle.interRegular.copyWith(
+                            color: AppColors.white,fontSize:16.sp
+                          ),
+                          autovalidateMode:
+                          AutovalidateMode.always,
+                          validator: (String? v){
+                            if(v!.length<4 && v.isNotEmpty){
                               return "Minimum 1000 som otkasish mumkin";
                             }
                           }
@@ -380,9 +369,7 @@ class _TransferScreenState extends State<TransferScreen> {
                                               AppTextStyle.interBold.copyWith(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w800,
-                                            fontSize: (active2 == index)
-                                                ? 16.sp
-                                                : 10.sp,
+                                            fontSize:(active2==index)? 14.sp:10.sp,
                                           ),
                                         ),
                                         Text(
@@ -441,7 +428,7 @@ class _TransferScreenState extends State<TransferScreen> {
                                 ),
                               );
                             }
-                            if (amountController.text.isEmpty) {
+                            else if(amountController.text.length<4 && amountController.text.isNotEmpty){
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   duration: const Duration(seconds: 1),
@@ -456,55 +443,37 @@ class _TransferScreenState extends State<TransferScreen> {
                                 ),
                               );
                             }
-                            if(amountController.text.isNotEmpty){
-                              if (state.cards[active1].amount <
-                                  double.parse(amountController.text)) {
-                                ScaffoldMessenger.of(context).showSnackBar(
+                            else if(amountController.text.isEmpty){
+                              ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    duration: const Duration(
-                                      seconds: 1,
-                                    ),
-                                    backgroundColor: Colors.red,
-                                    content: Text(
-                                      "Hisobda mablag' yetarli emas",
-                                      style: AppTextStyle.interMedium.copyWith(
-                                        color: AppColors.white,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                CardModel card1 =
-                                state.cards[active1];
-                                CardModel card2 =
-                                state.cards[active2];
-                                card1.copyWith(
-                                    amount: card1.amount -
-                                        double.parse(
-                                            amountController
-                                                .text));
-                                card2.copyWith(
-                                    amount: card2.amount +
-                                        double.parse(
-                                            amountController
-                                                .text));
-                                CardModel firstCard = card1;
-                                CardModel secondCard = card2;
-                                context.read<CardsBloc>().add(
-                                    UpdateCardEvent(
-                                        cardModel: firstCard));
-                                context.read<CardsBloc>().add(
-                                    UpdateCardEvent(
-                                        cardModel: secondCard));
-
-                                LocalNotificationService()
-                                    .showNotification(
-                                  title:
-                                  "DIQQAT!!! PUL O'TKAZMASI!!!",
-                                  body:
-                                  "${state.cards[active1].cardNumber} DAN ${state.cards[active2]} GA ${amountController.text} MIQDORIDA O'TKAZMA AMALGA OSHIRILDI!!!",
-                                  id: DateTime.now().millisecond,
+                                      duration:const Duration(seconds: 1),
+                                      backgroundColor: Colors.red,
+                                      content: Text("pul kiritmadingiz",style: AppTextStyle.interMedium.copyWith(color: AppColors.white,fontSize:16.sp),))
+                              );
+                            }
+                            else{
+                              showDialog(context: context, builder: (context){
+                                return AlertDialog(
+                                 content: const Text('Ishonchingiz komilmi??',),
+                                 actions: [
+                                   TextButton(onPressed: (){
+                                     CardModel card1=state.cards[active1];
+                                     CardModel card2=state.cards[active2];
+                                     card1=card1.copyWith(
+                                       amount:card1.amount-double.parse(amountController.text)
+                                     );
+                                     card2=card2.copyWith(
+                                       amount: card2.amount+double.parse(amountController.text)
+                                     );
+                                     amountController.text='';
+                                     context.read<CardsBloc>().add(UpdateCardEvent(cardModel: card1));
+                                     context.read<CardsBloc>().add(UpdateCardEvent(cardModel: card2));
+                                     Navigator.pop(context);
+                                   }, child:const Text('OK')),
+                                   TextButton(onPressed: (){
+                                     Navigator.pop(context);
+                                   }, child:const Text('CANCEL')),
+                                 ],
                                 );
                                 context.read<CardsBloc>().add(GetCardsEvent());
                                 Navigator.pushReplacement(

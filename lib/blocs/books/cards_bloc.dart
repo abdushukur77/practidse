@@ -25,9 +25,7 @@ Future<void> _getBooks(
   emit(CardsLoadingState());
   await Future.delayed(const Duration(seconds: 1));
   ApiProvider apiProvider = ApiProvider();
-  CardsRepository booksRepository = CardsRepository(
-    apiProvider: apiProvider,
-  );
+  CardsRepository booksRepository = CardsRepository(apiProvider: apiProvider,);
   var response = await booksRepository.getCards();
   if (response.errorText.isNotEmpty) {
     emit(CardsErrorState(response.errorText));
@@ -45,10 +43,9 @@ Future<void> _addBooks(
   try {
     ApiProvider apiProvider = ApiProvider();
     CardsRepository booksRepository = CardsRepository(apiProvider: apiProvider);
-    var response = await booksRepository.addNewCard(event.cardModel);
-
-    if (response.errorText.isNotEmpty) {
-      emit(CardsErrorState(response.errorText));
+    var response1= await booksRepository.addNewCard(event.cardModel);
+    if (response1.errorText.isNotEmpty) {
+      emit(CardsErrorState(response1.errorText));
     }
   } catch (error) {
     emit(CardsErrorState(error.toString()));
@@ -60,18 +57,21 @@ Future<void> _updateBooks(
   Emitter<CardsState> emit,
 ) async {
   emit(CardsLoadingState());
-
   try {
     ApiProvider apiProvider = ApiProvider();
     CardsRepository booksRepository = CardsRepository(apiProvider: apiProvider);
-    var response = await booksRepository.updateCard(event.cardModel);
-
-    if (response.errorText.isNotEmpty) {
-      emit(CardsErrorState(response.errorText));
+    var response1 = await booksRepository.updateCard(event.cardModel);
+    if (response1.errorText.isNotEmpty) {
+      emit(CardsErrorState(response1.errorText));
+    }
+    else{
+      var response2=await booksRepository.getCards();
+      emit(CardsSuccessState(cards: response2.data as List<CardModel>));
     }
   } catch (error) {
     emit(CardsErrorState(error.toString()));
   }
+  // add(GetCardsEvent());
 }
 
 Future<void> _deleteBooks(
