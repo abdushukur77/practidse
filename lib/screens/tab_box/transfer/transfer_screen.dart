@@ -402,7 +402,7 @@ class _TransferScreenState extends State<TransferScreen> {
                                 ),
                               );
                             }
-                            if (amountController.text.isEmpty) {
+                           else if (amountController.text.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   duration: const Duration(seconds: 1),
@@ -417,7 +417,7 @@ class _TransferScreenState extends State<TransferScreen> {
                                 ),
                               );
                             }
-                            if (amountController.text.isNotEmpty) {
+                           else if (amountController.text.isNotEmpty) {
                               if (state.cards[active1].amount <
                                   double.parse(amountController.text)) {
                                 ScaffoldMessenger.of(context).showSnackBar(
