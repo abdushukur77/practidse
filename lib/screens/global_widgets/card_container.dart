@@ -99,7 +99,7 @@ class CardContainer extends StatelessWidget {
                     'KARTA HISOBI:',
                     style: AppTextStyle.interBold.copyWith(
                       color: AppColors.white,
-                      fontSize: 18.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w900,
                     ),
                   ),

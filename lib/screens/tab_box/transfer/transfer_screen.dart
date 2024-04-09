@@ -6,9 +6,9 @@ import 'package:flutter/cupertino.dart';
   import 'package:flutter_screenutil/flutter_screenutil.dart';
   import 'package:intl/intl.dart';
   import 'package:practidse/blocs/books/cards_bloc.dart';
+import 'package:practidse/blocs/books/cards_event.dart';
   import 'package:practidse/blocs/books/cards_state.dart';
   import 'package:practidse/data/models/card/card_model.dart';
-import 'package:practidse/main.dart';
   import 'package:practidse/utils/colors/app_colors.dart';
   import 'package:practidse/utils/styles/app_text_style.dart';
   import 'package:practidse/utils/utility_functions/utility_functions.dart';
@@ -88,8 +88,8 @@ import 'package:practidse/main.dart';
                                       children: [
                                         Image.asset(
                                           AppImages.cipPng,
-                                          width: (active1==index)?38.w:18.sp,
-                                          height: (active1==index)?28.h:10.sp,
+                                          width: (active1==index)?38.w:10.sp,
+                                          height: (active1==index)?28.h:5.sp,
                                           fit: BoxFit.fill,
                                         ),
                                         SizedBox(
@@ -106,7 +106,7 @@ import 'package:practidse/main.dart';
                                       ],
                                     ),
                                     SizedBox(
-                                      height: 10.h,
+                                      height:(active1==index)?10.h:1.h,
                                     ),
                                     Text(
                                       card.cardNumber,
@@ -147,7 +147,7 @@ import 'package:practidse/main.dart';
                                       ],
                                     ),
                                     SizedBox(
-                                      height: 15.h,
+                                      height: (active1==index)?15.h:1.h,
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,7 +161,7 @@ import 'package:practidse/main.dart';
                                           ),
                                         ),
                                         Text(
-                                          "${card.expireDate[0]}${card.expireDate[1]}/${card.expireDate[2]}${card.expireDate[3]}",
+                                          card.expireDate,
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize:(active1==index)? 16.sp:1.sp,
@@ -336,7 +336,7 @@ import 'package:practidse/main.dart';
                                           ),
                                         ),
                                         Text(
-                                          "${card.expireDate[0]}${card.expireDate[1]}/${card.expireDate[2]}${card.expireDate[3]}",
+                                          card.expireDate,
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize:(active2==index)? 16.sp:1.sp,
@@ -390,6 +390,33 @@ import 'package:practidse/main.dart';
                                       backgroundColor: Colors.red,
                                       content: Text("Hisobda mablag' yetarli emas",style: AppTextStyle.interMedium.copyWith(color: AppColors.white,fontSize:16.sp),))
                               );
+                            }
+                            else{
+                              showDialog(context: context, builder: (context){
+                                return AlertDialog(
+                                 content: Text('Ishonchingiz komilmi??',),
+                                 actions: [
+                                   TextButton(onPressed: (){
+                                     CardModel card1=state.cards[active1];
+                                     CardModel card2=state.cards[active2];
+                                     card1.copyWith(
+                                       amount:card1.amount-double.parse(amountController.text)
+                                     );
+                                     card2.copyWith(
+                                       amount: card2.amount+double.parse(amountController.text)
+                                     );
+                                     amountController.text='';
+                                     context.read<CardsBloc>().add(UpdateCardEvent(cardModel: card1));
+                                     context.read<CardsBloc>().add(UpdateCardEvent(cardModel: card2));
+                                     Navigator.pop(context);
+                                   }, child:Text('OK')),
+                                   TextButton(onPressed: (){
+                                     Navigator.pop(context);
+                                   }, child:Text('CANCEL')),
+
+                                 ],
+                                );
+                              });
                             }
                             },
                             child:Text("O'tkazish",style: AppTextStyle.interRegular.copyWith(
