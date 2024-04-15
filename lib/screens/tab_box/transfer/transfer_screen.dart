@@ -104,14 +104,14 @@ class _TransferScreenState extends State<TransferScreen> {
                                   children: [
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       children: [
                                         Image.asset(
                                           AppImages.cipPng,
                                           width:
-                                          (active1 == index) ? 38.w : 18.sp,
+                                              (active1 == index) ? 38.w : 18.sp,
                                           height:
-                                          (active1 == index) ? 28.h : 10.sp,
+                                              (active1 == index) ? 28.h : 10.sp,
                                           fit: BoxFit.fill,
                                         ),
                                         SizedBox(
@@ -120,13 +120,15 @@ class _TransferScreenState extends State<TransferScreen> {
                                         Text(
                                           card.cardName,
                                           style:
-                                          AppTextStyle.interBold.copyWith(
+                                              AppTextStyle.interBold.copyWith(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w800,
                                             fontSize: 23.sp,
                                           ),
                                         ),
-                                        SizedBox(width: 20.w,),
+                                        SizedBox(
+                                          width: 20.w,
+                                        ),
                                         Text(
                                           card.expireDate,
                                           style: TextStyle(
@@ -159,8 +161,7 @@ class _TransferScreenState extends State<TransferScreen> {
                                       ).format(
                                         card.amount,
                                       ),
-                                      style:
-                                      AppTextStyle.interBold.copyWith(
+                                      style: AppTextStyle.interBold.copyWith(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w900,
                                         fontSize: 14.sp,
@@ -171,13 +172,11 @@ class _TransferScreenState extends State<TransferScreen> {
                                     ),
                                     Text(
                                       card.ownerName,
-                                      style:
-                                      AppTextStyle.interBold.copyWith(
+                                      style: AppTextStyle.interBold.copyWith(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w800,
-                                        fontSize: (active1 == index)
-                                            ? 16.sp
-                                            : 10.sp,
+                                        fontSize:
+                                            (active1 == index) ? 16.sp : 10.sp,
                                       ),
                                     ),
                                   ],
@@ -304,7 +303,9 @@ class _TransferScreenState extends State<TransferScreen> {
                                             fontSize: 23.sp,
                                           ),
                                         ),
-                                        SizedBox(width: 20.w,),
+                                        SizedBox(
+                                          width: 20.w,
+                                        ),
                                         Text(
                                           card.expireDate,
                                           style: TextStyle(
@@ -337,8 +338,7 @@ class _TransferScreenState extends State<TransferScreen> {
                                       ).format(
                                         card.amount,
                                       ),
-                                      style:
-                                          AppTextStyle.interBold.copyWith(
+                                      style: AppTextStyle.interBold.copyWith(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w900,
                                         fontSize: 14.sp,
@@ -349,13 +349,11 @@ class _TransferScreenState extends State<TransferScreen> {
                                     ),
                                     Text(
                                       card.ownerName,
-                                      style:
-                                          AppTextStyle.interBold.copyWith(
+                                      style: AppTextStyle.interBold.copyWith(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w800,
-                                        fontSize: (active2 == index)
-                                            ? 16.sp
-                                            : 10.sp,
+                                        fontSize:
+                                            (active2 == index) ? 16.sp : 10.sp,
                                       ),
                                     ),
                                   ],
@@ -384,31 +382,47 @@ class _TransferScreenState extends State<TransferScreen> {
                       width: double.infinity,
                       margin: EdgeInsets.symmetric(horizontal: 44.w),
                       child: TextButton(
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                          ),
-                          onPressed: () {
-                            if (active1 == active2) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  duration: const Duration(seconds: 1),
-                                  backgroundColor: Colors.red,
-                                  content: Text(
-                                    "YUBORUVCHI VA QABUL QILUVCHI KARTALAR HAR XIL BO'LISHI KERAK!!!",
-                                    style: AppTextStyle.interMedium.copyWith(
-                                        color: AppColors.white,
-                                        fontSize: 16.sp),
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.green,
+                        ),
+                        onPressed: () {
+                          if (active1 == active2) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: const Duration(seconds: 1),
+                                backgroundColor: Colors.red,
+                                content: Text(
+                                  "YUBORUVCHI VA QABUL QILUVCHI KARTALAR HAR XIL BO'LISHI KERAK!!!",
+                                  style: AppTextStyle.interMedium.copyWith(
+                                      color: AppColors.white, fontSize: 16.sp),
+                                ),
+                              ),
+                            );
+                          } else if (amountController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: const Duration(seconds: 1),
+                                backgroundColor: Colors.red,
+                                content: Text(
+                                  "KAMIDA 1000 UZS O'TKAZMA AMALGA OSHIRISH MUMKIN!!!",
+                                  style: AppTextStyle.interMedium.copyWith(
+                                    color: AppColors.white,
+                                    fontSize: 16.sp,
                                   ),
                                 ),
-                              );
-                            }
-                           else if (amountController.text.isEmpty) {
+                              ),
+                            );
+                          } else if (amountController.text.isNotEmpty) {
+                            if (state.cards[active1].amount <
+                                double.parse(amountController.text)) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  duration: const Duration(seconds: 1),
+                                  duration: const Duration(
+                                    seconds: 1,
+                                  ),
                                   backgroundColor: Colors.red,
                                   content: Text(
-                                    "KAMIDA 1000 UZS O'TKAZMA AMALGA OSHIRISH MUMKIN!!!",
+                                    "Hisobda mablag' yetarli emas",
                                     style: AppTextStyle.interMedium.copyWith(
                                       color: AppColors.white,
                                       fontSize: 16.sp,
@@ -416,91 +430,73 @@ class _TransferScreenState extends State<TransferScreen> {
                                   ),
                                 ),
                               );
-                            }
-                           else if (amountController.text.isNotEmpty) {
-                              if (state.cards[active1].amount <
-                                  double.parse(amountController.text)) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    duration: const Duration(
-                                      seconds: 1,
+                            } else {
+                              CardModel card1 = CardModel(
+                                color: state.cards[active1].color,
+                                amount: state.cards[active1].amount -
+                                    double.parse(
+                                      amountController.text,
                                     ),
-                                    backgroundColor: Colors.red,
-                                    content: Text(
-                                      "Hisobda mablag' yetarli emas",
-                                      style: AppTextStyle.interMedium.copyWith(
-                                        color: AppColors.white,
-                                        fontSize: 16.sp,
-                                      ),
+                                cardNumber: state.cards[active1].cardNumber,
+                                expireDate: state.cards[active1].expireDate,
+                                bankName: state.cards[active1].bankName,
+                                cardName: state.cards[active1].cardName,
+                                isMain: state.cards[active1].isMain,
+                                ownerName: state.cards[active1].ownerName,
+                                uuid: state.cards[active1].uuid,
+                                providerName: state.cards[active1].providerName,
+                              );
+                              CardModel card2 = CardModel(
+                                color: state.cards[active2].color,
+                                amount: state.cards[active2].amount +
+                                    double.parse(
+                                      amountController.text,
                                     ),
-                                  ),
-                                );
-                              } else {
-                                CardModel card1 = CardModel(
-                                  color: state.cards[active1].color,
-                                  amount: state.cards[active1].amount -
-                                      double.parse(
-                                        amountController.text,
-                                      ),
-                                  cardNumber: state.cards[active1].cardNumber,
-                                  expireDate: state.cards[active1].expireDate,
-                                  bankName: state.cards[active1].bankName,
-                                  cardName: state.cards[active1].cardName,
-                                  isMain: state.cards[active1].isMain,
-                                  ownerName: state.cards[active1].ownerName,
-                                  uuid: state.cards[active1].uuid,
-                                  providerName:
-                                      state.cards[active1].providerName,
-                                );
-                                CardModel card2 = CardModel(
-                                  color: state.cards[active2].color,
-                                  amount: state.cards[active2].amount +
-                                      double.parse(
-                                        amountController.text,
-                                      ),
-                                  cardNumber: state.cards[active2].cardNumber,
-                                  expireDate: state.cards[active2].expireDate,
-                                  bankName: state.cards[active2].bankName,
-                                  cardName: state.cards[active2].cardName,
-                                  isMain: state.cards[active2].isMain,
-                                  ownerName: state.cards[active2].ownerName,
-                                  uuid: state.cards[active2].uuid,
-                                  providerName:
-                                      state.cards[active2].providerName,
-                                );
-                                context.read<CardsBloc>().add(
-                                      UpdateCardEvent(
-                                        cardModel: card1,
-                                      ),
-                                    );
-                                context.read<CardsBloc>().add(
-                                      UpdateCardEvent(
-                                        cardModel: card2,
-                                      ),
-                                    );
-                                LocalNotificationService().showNotification(
-                                  title: "DIQQAT!!! PUL O'TKAZMASI!!!",
-                                  body:
-                                      "${state.cards[active1].cardNumber} DAN ${state.cards[active2].cardNumber} GA ${amountController.text} MIQDORIDA O'TKAZMA AMALGA OSHIRILDI!!!",
-                                  id: DateTime.now().millisecond,
-                                );
-                                context.read<CardsBloc>().add(
-                                      GetCardsEvent(),
-                                    );
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const TabBox(),
-                                  ),
-                                );
-                              }
+                                cardNumber: state.cards[active2].cardNumber,
+                                expireDate: state.cards[active2].expireDate,
+                                bankName: state.cards[active2].bankName,
+                                cardName: state.cards[active2].cardName,
+                                isMain: state.cards[active2].isMain,
+                                ownerName: state.cards[active2].ownerName,
+                                uuid: state.cards[active2].uuid,
+                                providerName: state.cards[active2].providerName,
+                              );
+                              context.read<CardsBloc>().add(
+                                    UpdateCardEvent(
+                                      cardModel: card1,
+                                    ),
+                                  );
+                              context.read<CardsBloc>().add(
+                                    UpdateCardEvent(
+                                      cardModel: card2,
+                                    ),
+                                  );
+                              LocalNotificationService().showNotification(
+                                title: "DIQQAT!!! PUL O'TKAZMASI!!!",
+                                body:
+                                    "${state.cards[active1].cardNumber} DAN ${state.cards[active2].cardNumber} GA ${amountController.text} MIQDORIDA O'TKAZMA AMALGA OSHIRILDI!!!",
+                                id: DateTime.now().millisecond,
+                              );
+                              context.read<CardsBloc>().add(
+                                    GetCardsEvent(),
+                                  );
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const TabBox(),
+                                ),
+                              );
                             }
-                          },
-                          child: Text(
-                            "O'tkazish",
-                            style: AppTextStyle.interRegular.copyWith(
-                                color: AppColors.white, fontSize: 16.sp),
-                          )),
+                          }
+                        },
+                        child: Text(
+                          "O'tkazish",
+                          style: AppTextStyle.interRegular.copyWith(
+                            color: AppColors.white,
+                            fontSize: 16.sp,
+                          ),
+                        ),
+                      ),
                     )
                   ],
                 ),

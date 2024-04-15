@@ -188,11 +188,10 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
                                   : TextInputAction.next,
                               decoration: InputDecoration(
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.red,
-                                   width:  2.w,
-                                  )
-                                ),
+                                    borderSide: BorderSide(
+                                  color: Colors.red,
+                                  width: 2.w,
+                                )),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(
                                     16.r,
